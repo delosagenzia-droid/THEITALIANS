@@ -5,25 +5,25 @@ const steps = [
     {
         number: "01",
         title: "Contatto e Selezione",
-        description: "Valutiamo il potenziale narrativo del brand. Non ogni storia è per THE ITALIANS, selezioniamo solo l'autenticità.",
+        description: "Facciamo una prima call per conoscerci e capire come valorizzare al meglio i vostri punti di forza",
         icon: Send
     },
     {
         number: "02",
-        title: "Pianificazione Strategica",
-        description: "Scripting e scouting. Disegniamo il percorso emotivo del video prima ancora di accendere le camere.",
+        title: "Pianificazione",
+        description: "Definiamo insieme i temi, le persone da intervistare, la giornata di riprese. Sopralluogo (se necessario) per organizzare al meglio.",
         icon: MessageSquare
     },
     {
         number: "03",
-        title: "Cinematografia Live",
-        description: "Produzione sul campo con standard 4K HDR. Documentiamo il lavoro reale, senza set costruiti o finzioni.",
+        title: "Giornata di Riprese",
+        description: "Veniamo da voi con una troupe leggera. Riprendiamo interviste, ambienti, processo produttivo.",
         icon: Camera
     },
     {
         number: "04",
-        title: "Post-produzione",
-        description: "Color grading cinematografico e sound design immersivo. La rifinitura finale che definisce l'opera.",
+        title: "Post-produzione e Pubblicazione",
+        description: "Montiamo i contenuti, li revisioniamo insieme a voi. Pubblichiamo sui canali secondo il piano concordato.",
         icon: Clapperboard
     }
 ];
@@ -41,12 +41,12 @@ export function Format() {
                     <div className="max-w-2xl">
                         <SectionNumber number="02" className="mb-6" />
                         <h2 className="font-display text-5xl md:text-7xl text-white leading-none tracking-tight">
-                            Il Nostro <br />
-                            <span className="text-accent italic font-light">Processo.</span>
+                            Come <br />
+                            <span className="text-accent italic font-light">funziona.</span>
                         </h2>
                     </div>
                     <p className="text-text-muted text-lg max-w-sm font-light border-l border-white/10 pl-6">
-                        Dall'idea iniziale alla consegna finale, un percorso studiato per massimizzare l'impatto del tuo brand.
+                        Dalla selezione alla pubblicazione
                     </p>
                 </div>
 
