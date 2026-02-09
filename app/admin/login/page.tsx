@@ -36,11 +36,11 @@ export default function AdminLogin() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-bg">
             <div className="max-w-md w-full p-8 bg-bg-card border border-white/5 rounded-sm">
-                <h1 className="text-2xl font-display text-white mb-6 text-center">Admin Access</h1>
+                <h1 className="text-2xl font-heading font-bold text-white mb-6 text-center">Admin Access</h1>
 
                 <form onSubmit={handleLogin} className="space-y-6">
                     <div>
-                        <label className="block text-xs uppercase tracking-widest text-text-subtle mb-2">Email</label>
+                        <label className="block text-xs uppercase tracking-widest text-text-subtle font-body font-medium mb-2">Email</label>
                         <input
                             type="email"
                             value={email}
@@ -51,7 +51,7 @@ export default function AdminLogin() {
                     </div>
 
                     <div>
-                        <label className="block text-xs uppercase tracking-widest text-text-subtle mb-2">Password</label>
+                        <label className="block text-xs uppercase tracking-widest text-text-subtle font-body font-medium mb-2">Password</label>
                         <input
                             type="password"
                             value={password}

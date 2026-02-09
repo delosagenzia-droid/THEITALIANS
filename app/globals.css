@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0a0a0a;
-  --color-bg-elevated: #0f0f0e;
-  --color-bg-card: #1a1a18;
+  --color-bg: #1D1D1D;
+  --color-bg-elevated: #1D1D1D;
+  /* Using same dark background or slightly different if needed, prompt says #1D1D1D */
+  --color-bg-light: #F5F5F5;
+  --color-bg-card: #252525;
+  /* Slightly lighter for cards if needed, or keeping explicit */
 
-  --color-accent: #c4a052;
-  --color-accent-dark: #8a7035;
-  --color-accent-light: #d4b876;
+  --color-accent: #F69E00;
+  --color-accent-hover: #E08E00;
 
-  --color-text: #f5f5f0;
-  --color-text-muted: #a0a0a0;
-  --color-text-subtle: #606060;
+  --color-text: #FFFFFF;
+  --color-text-inverse: #1D1D1D;
+  --color-text-muted: #A0A0A0;
+  --color-text-subtle: #707070;
 
-  --color-border: rgba(255, 255, 255, 0.05);
-  --color-border-accent: rgba(196, 160, 82, 0.2);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-accent: #F69E00;
 
-  --font-display: var(--font-display);
+  --font-heading: var(--font-heading);
   --font-body: var(--font-body);
 }
 
 @layer base {
   body {
-    @apply bg-bg text-text antialiased;
+    @apply bg-bg text-text antialiased font-body font-light text-[16px];
   }
 
   h1,
@@ -31,7 +34,23 @@
   h4,
   h5,
   h6 {
-    @apply font-display;
+    @apply font-heading text-text;
+  }
+
+  h1 {
+    @apply text-[68px] font-bold leading-tight;
+  }
+
+  h2 {
+    @apply text-[42px] font-semibold leading-tight;
+  }
+
+  h3 {
+    @apply text-[38px] font-bold leading-tight;
+  }
+
+  h4 {
+    @apply text-[16px] font-bold leading-tight;
   }
 }
 
@@ -150,5 +169,16 @@
 
   66% {
     transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* Shine Animation */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) skewX(12deg);
+  }
+
+  100% {
+    transform: translateX(200%) skewX(12deg);
   }
 }

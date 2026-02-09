@@ -68,7 +68,7 @@ export function CookieBanner() {
                 {!showCustomize ? (
                     <div className="flex flex-col md:flex-row gap-8 items-start md:items-center">
                         <div className="flex-1 space-y-2">
-                            <h3 className="font-display text-xl text-white">Rispetto della tua Privacy</h3>
+                            <h3 className="font-heading font-semibold text-xl text-white">Rispetto della tua Privacy</h3>
                             <p className="text-text-muted text-sm leading-relaxed max-w-2xl">
                                 Utilizziamo cookie tecnici per il funzionamento del sito e, previo tuo consenso, cookie di profilazione per migliorare la tua esperienza.
                                 Puoi accettare tutti i cookie, rifiutare quelli non necessari o personalizzare le tue scelte.

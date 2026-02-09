@@ -6,19 +6,19 @@ export default function CookiePolicy() {
             <div className="max-w-3xl mx-auto">
                 <div className="mb-12">
                     <SectionNumber number="Cookie" className="mb-4" />
-                    <h1 className="font-display text-4xl md:text-5xl text-white mb-4">Cookie Policy</h1>
+                    <h1 className="font-heading font-bold text-4xl md:text-5xl text-white mb-4">Cookie Policy</h1>
                 </div>
 
                 <div className="space-y-12 text-text-muted leading-relaxed font-light">
                     <div>
-                        <h2 className="text-white font-display text-2xl mb-4">Cosa sono i Cookie</h2>
+                        <h2 className="text-white font-heading font-semibold text-2xl mb-4">Cosa sono i Cookie</h2>
                         <p>
                             I cookie sono piccoli file di testo che i siti visitati inviano al terminale dell'utente, dove vengono memorizzati per essere ritrasmessi agli stessi siti alla visita successiva.
                         </p>
                     </div>
 
                     <div>
-                        <h2 className="text-white font-display text-2xl mb-4">Tipologie di Cookie Utilizzati</h2>
+                        <h2 className="text-white font-heading font-semibold text-2xl mb-4">Tipologie di Cookie Utilizzati</h2>
 
                         <div className="space-y-6 mt-6">
                             <div className="bg-bg-card p-6 border border-white/5 rounded-sm">
@@ -45,7 +45,7 @@ export default function CookiePolicy() {
                     </div>
 
                     <div>
-                        <h2 className="text-white font-display text-2xl mb-4">Gestione dei Cookie</h2>
+                        <h2 className="text-white font-heading font-semibold text-2xl mb-4">Gestione dei Cookie</h2>
                         <p>
                             Puoi modificare le tue preferenze in qualsiasi momento cliccando sul banner in basso o attraverso le impostazioni del tuo browser.
                         </p>

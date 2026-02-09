@@ -1,186 +1,271 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '../ui/Button';
+import Link from 'next/link';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 
 export function Hero() {
     const [isLoaded, setIsLoaded] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Mouse tracking for 3D parallax
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // Smooth spring animation for mouse movement
+    const springConfig = { damping: 25, stiffness: 100 };
+    const springX = useSpring(mouseX, springConfig);
+    const springY = useSpring(mouseY, springConfig);
+
+    // Parallax transforms for different layers
+    const layer1X = useTransform(springX, [-0.5, 0.5], [-20, 20]);
+    const layer1Y = useTransform(springY, [-0.5, 0.5], [-20, 20]);
+
+    const layer2X = useTransform(springX, [-0.5, 0.5], [30, -30]);
+    const layer2Y = useTransform(springY, [-0.5, 0.5], [30, -30]);
+
+    const layer3X = useTransform(springX, [-0.5, 0.5], [-10, 10]);
+    const layer3Y = useTransform(springY, [-0.5, 0.5], [-10, 10]);
+
+    // Spotlight effect
+    const spotX = useTransform(springX, [-0.5, 0.5], ["30%", "70%"]);
+    const spotY = useTransform(springY, [-0.5, 0.5], ["30%", "70%"]);
+    const spotlightGradient = useMotionTemplate`radial-gradient(circle 400px at ${spotX} ${spotY}, rgba(246,158,0,0.08), transparent 80%)`;
 
     useEffect(() => {
-        // Trigger animations after mount
         const timer = setTimeout(() => setIsLoaded(true), 100);
         return () => clearTimeout(timer);
     }, []);
 
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!containerRef.current) return;
+        const { width, height, left, top } = containerRef.current.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        mouseX.set(x);
+        mouseY.set(y);
+    };
+
     return (
-        <section className="relative h-screen flex items-center overflow-hidden bg-bg">
+        <section
+            ref={containerRef}
+            onMouseMove={handleMouseMove}
+            className="relative min-h-screen flex items-center overflow-hidden bg-[#1D1D1D] perspective-1000"
+        >
+            {/* ===================== BACKGROUND ===================== */}
 
-            {/* ===== BACKGROUND LAYERS ===== */}
+            {/* Base: subtle depth, stays black/charcoal */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#111111] via-[#1D1D1D] to-[#0D0D0D] z-0" />
 
-            {/* Base gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-bg via-bg-elevated to-bg" />
+            {/* Interactive Spotlight (follows mouse) */}
+            <motion.div
+                className="absolute inset-0 z-0 pointer-events-none opacity-60"
+                style={{ background: spotlightGradient }}
+            />
 
-            {/* Radial glow - subtle golden light from top */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(196,160,82,0.15),transparent)]" />
+            {/* Accent glow (ONLY #F69E00) — top spotlight */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(246,158,0,0.12),transparent_60%)] z-0" />
 
-            {/* Bottom fade for smooth transition to next section */}
-            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-bg to-transparent" />
+            {/* Secondary accent glow — right side (very subtle) */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_55%_at_85%_30%,rgba(246,158,0,0.08),transparent_65%)] z-0" />
 
-            {/* Film Grain Overlay - cinematic texture */}
+            {/* Film grain overlay (keep, but cleaner) */}
             <div
-                className="absolute inset-0 opacity-[0.03] pointer-events-none z-50 animate-grain"
+                className="absolute inset-0 opacity-[0.035] pointer-events-none z-50"
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
                 }}
             />
 
-            {/* ===== DECORATIVE ELEMENTS ===== */}
+            {/* Bottom fade into next section */}
+            <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#1D1D1D] to-transparent z-10" />
 
-            {/* Large decorative circle - top right */}
-            <div
-                className="absolute -top-20 -right-20 w-[500px] h-[500px] border border-accent/10 rounded-full transition-transform duration-[3000ms] ease-out"
-                style={{ transform: isLoaded ? 'scale(1)' : 'scale(0.8)' }}
-            />
-            <div
-                className="absolute -top-10 -right-10 w-[400px] h-[400px] border border-accent/5 rounded-full transition-transform duration-[3500ms] ease-out delay-200"
-                style={{ transform: isLoaded ? 'scale(1)' : 'scale(0.8)' }}
-            />
+            {/* ===================== 3D DECOR / LINES ===================== */}
 
-            {/* Small decorative circle - bottom left */}
-            <div className="absolute -bottom-32 -left-32 w-[300px] h-[300px] border border-white/5 rounded-full" />
+            {/* 3D Floating Elements Container */}
+            <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                {/* Layer 1: Premium Rings (Moves with mouse) */}
+                <motion.div
+                    style={{ x: layer1X, y: layer1Y, rotate: 0 }}
+                    className="absolute inset-0"
+                >
+                    <div
+                        className="absolute -top-24 -right-24 w-[520px] h-[520px] rounded-full border border-[#F69E00]/12 transition-transform duration-[2800ms] ease-out"
+                        style={{ transform: isLoaded ? 'scale(1)' : 'scale(0.86)' }}
+                    />
+                </motion.div>
 
-            {/* Diagonal accent line */}
-            <div className="absolute top-0 right-1/4 w-px h-32 bg-gradient-to-b from-transparent via-accent/30 to-transparent hidden lg:block" />
+                {/* Layer 2: Inner Ring (Moves opposite to mouse for depth) */}
+                <motion.div
+                    style={{ x: layer2X, y: layer2Y, rotate: 0 }}
+                    className="absolute inset-0"
+                >
+                    <div
+                        className="absolute -top-12 -right-12 w-[420px] h-[420px] rounded-full border border-[#F69E00]/7 transition-transform duration-[3200ms] ease-out delay-200"
+                        style={{ transform: isLoaded ? 'scale(1)' : 'scale(0.88)' }}
+                    />
+                </motion.div>
 
-            {/* Horizontal accent line */}
-            <div className="absolute top-1/3 right-0 w-32 h-px bg-gradient-to-l from-transparent via-accent/20 to-transparent hidden lg:block" />
+                {/* Layer 3: Floating Particles / Orbs */}
+                <motion.div
+                    style={{ x: layer3X, y: layer3Y }}
+                    className="absolute inset-0"
+                >
+                    {/* Orb 1 */}
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#F69E00]/5 rounded-full blur-[80px]" />
+                    {/* Orb 2 */}
+                    <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-[#F69E00]/3 rounded-full blur-[100px]" />
+                </motion.div>
+            </div>
 
-            {/* ===== MAIN CONTENT ===== */}
+            {/* Minimal grid lines (cinematic, ultra subtle) */}
+            <div className="absolute inset-0 opacity-[0.18] pointer-events-none z-0">
+                <div className="absolute left-0 top-0 h-full w-px bg-white/5" />
+                <div className="absolute right-0 top-0 h-full w-px bg-white/5" />
+                <div className="absolute left-1/2 top-0 h-full w-px bg-white/3 hidden lg:block" />
+            </div>
+
+            {/* ===================== CONTENT ===================== */}
 
             <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 lg:px-20">
-
-                {/* Section indicator */}
+                {/* Section indicator (8px spacing logic: label -> heading) */}
                 <div
-                    className={`
-                        flex items-center gap-4 mb-12
-                        transition-all duration-1000 ease-out
-                        ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-                    `}
+                    className={[
+                        'flex items-center gap-4 mb-8',
+                        'transition-all duration-1000 ease-out',
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4',
+                    ].join(' ')}
                 >
-                    <span className="font-body text-[11px] tracking-[4px] text-accent/70 uppercase">
+                    <span className="font-body font-medium text-[12px] tracking-widest text-[#F69E00] uppercase">
                         01
                     </span>
-                    <div className="w-12 h-px bg-gradient-to-r from-accent/50 to-transparent" />
-                    <span className="font-body text-[10px] tracking-[2px] text-text-subtle/50 uppercase hidden sm:inline">
+                    <div className="w-12 h-px bg-gradient-to-r from-[#F69E00]/70 to-transparent" />
+                    <span className="font-body font-medium text-[12px] tracking-widest text-white/45 uppercase hidden sm:inline">
                         The Italians
                     </span>
                 </div>
 
-                {/* Main Title */}
+                {/* Title */}
                 <h1
-                    className={`
-                        font-display text-[clamp(2.5rem,8vw,7rem)] font-light leading-[1.05] tracking-tight mb-8
-                        transition-all duration-1000 delay-200 ease-out
-                        ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-                    `}
+                    className={[
+                        'font-heading font-bold',
+                        'text-[clamp(2.6rem,7.6vw,6.2rem)] leading-[1.02] tracking-tight',
+                        'mb-2', // 8px between heading and body (tailwind step ≈ 8px)
+                        'transition-all duration-1000 delay-150 ease-out',
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
+                    ].join(' ')}
                 >
                     <span className="text-white">Raccontiamo le</span>
                     <br />
-                    <span className="italic text-accent">Imprese Italiane</span>
+                    <span className="italic text-[#F69E00]">Imprese Italiane</span>
                 </h1>
 
-                {/* Tagline / Description */}
+                {/* Description */}
                 <p
-                    className={`
-                        font-body text-text-muted text-base md:text-lg font-light leading-relaxed max-w-xl mb-6
-                        transition-all duration-1000 delay-400 ease-out
-                        ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-                    `}
+                    className={[
+                        'font-body font-light text-white/70',
+                        'text-base md:text-lg leading-relaxed',
+                        'max-w-xl mb-6', // 24px before CTA block
+                        'transition-all duration-1000 delay-300 ease-out',
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
+                    ].join(' ')}
                 >
                     Entriamo nelle fabbriche, nei laboratori, nelle cucine.
                     <br className="hidden md:block" />
-                    Ascoltiamo le voci di chi lavora ogni giorno dietro l'eccellenza italiana.
+                    Ascoltiamo le voci di chi lavora ogni giorno dietro l&apos;eccellenza italiana.
                 </p>
 
                 {/* Collaboration credit */}
                 <p
-                    className={`
-                        font-body text-[11px] tracking-[3px] text-text-subtle uppercase mb-12
-                        transition-all duration-1000 delay-500 ease-out
-                        ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-                    `}
+                    className={[
+                        'font-body font-medium text-[12px] tracking-widest uppercase',
+                        'text-white/45 mb-6', // 24px total stack control before CTA (here = 24px-ish)
+                        'transition-all duration-1000 delay-400 ease-out',
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
+                    ].join(' ')}
                 >
-                    Riccardo Segna
-                    <span className="inline-block mx-3 text-accent">×</span>
-                    Delos Lab — 2026
+                    Riccardo Segna <span className="mx-3 text-[#F69E00]">×</span> Delos Lab — 2026
                 </p>
 
-                {/* CTA Buttons */}
+                {/* CTA */}
                 <div
-                    className={`
-                        flex flex-col sm:flex-row items-start gap-4
-                        transition-all duration-1000 delay-700 ease-out
-                        ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
-                    `}
+                    className={[
+                        'flex flex-col sm:flex-row items-center gap-4',
+                        'transition-all duration-1000 delay-550 ease-out',
+                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
+                    ].join(' ')}
                 >
-                    <Button variant="primary" size="lg">
-                        Scopri il Format
-                    </Button>
-                    <Button variant="outline" size="lg">
-                        Guarda le Storie
-                    </Button>
+                    {/* Primary: #F69E00 + hover #E08E00, radius 8 */}
+                    <Link href="#format" className="w-full sm:w-auto">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="group relative w-full sm:w-auto overflow-hidden rounded-[8px] bg-[#F69E00] px-8 py-4 text-[15px] tracking-wide text-white font-body font-bold uppercase shadow-[0_10px_30px_rgba(246,158,0,0.25)] transition-colors hover:bg-[#E08E00] hover:shadow-[0_20px_40px_rgba(246,158,0,0.4)]"
+                        >
+                            <span className="relative z-10">Scopri il Format</span>
+
+                            {/* Shine effect */}
+                            <div className="absolute inset-0 -translate-x-full group-hover:animate-[shine_1.5s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-12 z-0" />
+                        </motion.button>
+                    </Link>
+
+                    {/* Secondary: outline with accent, keeps premium look */}
+                    <Link href="#storie" className="w-full sm:w-auto">
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            className="w-full sm:w-auto rounded-[8px] border border-white/20 bg-transparent px-8 py-4 text-[15px] tracking-wide text-white font-body font-bold uppercase hover:bg-white/5 hover:border-white/40 hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm"
+                        >
+                            Guarda le Storie
+                        </Button>
+                    </Link>
                 </div>
             </div>
 
-            {/* ===== SCROLL INDICATOR ===== */}
+            {/* ===================== SCROLL / SIDE ===================== */}
 
             <div
-                className={`
-                    absolute bottom-12 left-12 hidden lg:flex items-center gap-6
-                    transition-all duration-1000 delay-1000 ease-out
-                    ${isLoaded ? 'opacity-100' : 'opacity-0'}
-                `}
+                className={[
+                    'absolute bottom-12 left-12 hidden lg:flex items-center gap-6',
+                    'transition-all duration-1000 delay-900 ease-out',
+                    isLoaded ? 'opacity-100' : 'opacity-0',
+                ].join(' ')}
             >
-                {/* Animated vertical line */}
                 <div className="relative h-16 w-px overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-accent to-transparent animate-scroll-line" />
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#F69E00] to-transparent animate-scroll-line" />
                 </div>
-
                 <span
-                    className="font-body text-[10px] tracking-[2px] text-text-subtle uppercase"
+                    className="font-body text-[10px] tracking-[2px] text-white/45 uppercase"
                     style={{ writingMode: 'vertical-lr', transform: 'rotate(180deg)' }}
                 >
                     Scroll
                 </span>
             </div>
 
-            {/* ===== SIDE DECORATIONS ===== */}
-
-            {/* Right side vertical text */}
             <div
-                className={`
-                    absolute right-12 top-1/2 -translate-y-1/2 hidden xl:block
-                    transition-all duration-1000 delay-800 ease-out
-                    ${isLoaded ? 'opacity-100' : 'opacity-0'}
-                `}
+                className={[
+                    'absolute right-12 top-1/2 -translate-y-1/2 hidden xl:block',
+                    'transition-all duration-1000 delay-700 ease-out',
+                    isLoaded ? 'opacity-100' : 'opacity-0',
+                ].join(' ')}
             >
                 <span
-                    className="font-body text-[10px] tracking-[3px] text-text-subtle/50 uppercase"
+                    className="font-body text-[10px] tracking-[3px] text-white/35 uppercase"
                     style={{ writingMode: 'vertical-lr' }}
                 >
                     Storie di Eccellenza
                 </span>
             </div>
 
-            {/* Bottom right - social hint */}
             <div
-                className={`
-                    absolute bottom-12 right-12 hidden lg:flex items-center gap-4
-                    transition-all duration-1000 delay-1100 ease-out
-                    ${isLoaded ? 'opacity-100' : 'opacity-0'}
-                `}
+                className={[
+                    'absolute bottom-12 right-12 hidden lg:flex items-center gap-4',
+                    'transition-all duration-1000 delay-1000 ease-out',
+                    isLoaded ? 'opacity-100' : 'opacity-0',
+                ].join(' ')}
             >
-                <span className="font-body text-[10px] tracking-[2px] text-text-subtle/50 uppercase">
+                <span className="font-body text-[10px] tracking-[2px] text-white/35 uppercase">
                     @theitalians
                 </span>
                 <div className="w-8 h-px bg-white/10" />

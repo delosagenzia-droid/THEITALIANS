@@ -1,32 +1,21 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Inter } from "next/font/google"; // Keep Inter from Google
+import { Inter, Poppins } from "next/font/google"; // Google Fonts
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieBanner } from "@/components/legal/CookieBanner";
 
-// Configure Garet Local Font
-const garet = localFont({
-  src: [
-    {
-      path: '../public/fonts/Garet-Book.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Garet-Heavy.otf',
-      weight: '800',
-      style: 'normal',
-    },
-  ],
-  variable: "--font-display",
+// Configure Fonts
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"], // Regular, SemiBold, Bold
+  variable: "--font-heading",
 });
 
-const inter = Inter({
-  variable: "--font-body",
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "600"], // Light, Regular, Medium, SemiBold
+  variable: "--font-body",
 });
 
 export const metadata: Metadata = {
@@ -42,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${garet.variable} ${inter.variable} antialiased font-body bg-bg text-text`}
+        className={`${inter.variable} ${poppins.variable} antialiased font-body bg-bg text-text`}
       >
         <Navbar />
         <main className="min-h-screen">

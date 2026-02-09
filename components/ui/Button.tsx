@@ -8,50 +8,30 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className = '', variant = 'primary', size = 'md', children, ...props }, ref) => {
 
-        const baseStyles = `
-            relative inline-flex items-center justify-center
-            font-body font-normal uppercase tracking-[3px]
-            transition-all duration-400 ease-out
-            overflow-hidden
-            cursor-pointer
-        `;
+        const baseStyles = "inline-flex items-center justify-center transition-all duration-300 font-body font-semibold text-[16px] rounded-lg tracking-wide disabled:opacity-50 disabled:cursor-not-allowed";
 
-        // Note: Using template literals for Tailwind classes to ensure they are picked up, 
-        // but structured as strings in the object.
         const variants = {
-            primary: `
-                bg-transparent border border-accent text-accent
-                hover:bg-accent hover:text-bg
-                before:absolute before:inset-0 before:bg-accent 
-                before:translate-x-[-101%] before:transition-transform before:duration-500 before:ease-out
-                hover:before:translate-x-0 before:z-0
-            `,
-            outline: `
-                bg-transparent border border-white/20 text-text-muted
-                hover:border-white/40 hover:text-white
-            `,
-            ghost: `
-                bg-transparent text-text-muted
-                hover:text-white
-            `,
+            primary: "bg-accent text-white hover:bg-accent-hover shadow-md hover:shadow-lg active:scale-[0.98]",
+            outline: "border-2 border-accent text-accent hover:bg-accent hover:text-white bg-transparent",
+            ghost: "text-text-subtle hover:text-accent hover:bg-white/5 bg-transparent",
         };
 
         const sizes = {
-            sm: 'px-6 py-3 text-[10px]',
-            md: 'px-8 py-4 text-[11px]',
-            lg: 'px-10 py-5 text-[11px]',
+            sm: 'px-4 py-2 text-[14px]',
+            md: 'px-6 py-3 text-[16px]', // Standard from prompt: 12px 24px
+            lg: 'px-8 py-4 text-[18px]',
         };
 
         // Combine classes safely
-        const combinedClassName = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`.replace(/\s+/g, ' ').trim();
+        const combinedClassName = `${baseStyles} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`;
 
         return (
             <button
                 ref={ref}
-                className={combinedClassName}
+                className={combinedClassName.trim()}
                 {...props}
             >
-                <span className="relative z-10">{children}</span>
+                {children}
             </button>
         );
     }

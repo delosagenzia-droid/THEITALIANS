@@ -52,7 +52,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
                         <Link href="/#storie" className="inline-block mb-6 text-accent text-xs uppercase tracking-widest hover:text-white transition-colors">
                             ← Torna alle storie
                         </Link>
-                        <h1 className="text-5xl md:text-7xl font-display text-white mb-4 italic">
+                        <h1 className="text-5xl md:text-7xl font-heading font-bold text-white mb-4 italic">
                             {episode.title}
                         </h1>
                         <p className="text-xl md:text-2xl text-text-muted">{episode.company_name}</p>
@@ -88,7 +88,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
                 </div>
 
                 <div className="prose prose-invert prose-lg max-w-none mb-20">
-                    <h2 className="text-3xl font-display italic text-white mb-8">La Storia</h2>
+                    <h2 className="text-3xl font-heading font-bold italic text-white mb-8">La Storia</h2>
                     <p className="text-text-muted leading-relaxed whitespace-pre-line">
                         {episode.description}
                     </p>
@@ -98,7 +98,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
                 <div className="space-y-12">
                     {episode.video_riccardo_url && (
                         <div>
-                            <h3 className="text-2xl font-display text-white mb-6">Intervista Riccardo Segna</h3>
+                            <h3 className="text-2xl font-heading font-bold text-white mb-6">Intervista Riccardo Segna</h3>
                             <div className="aspect-video bg-neutral-900 rounded-sm border border-white/5 flex items-center justify-center">
                                 <a href={episode.video_riccardo_url} target="_blank" rel="noreferrer">
                                     <Button variant="outline">Guarda su YouTube</Button>
@@ -109,7 +109,7 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
 
                     {episode.video_theitalians_url && (
                         <div>
-                            <h3 className="text-2xl font-display text-white mb-6">Documentario THE ITALIANS</h3>
+                            <h3 className="text-2xl font-heading font-bold text-white mb-6">Documentario THE ITALIANS</h3>
                             <div className="aspect-video bg-neutral-900 rounded-sm border border-white/5 flex items-center justify-center">
                                 <a href={episode.video_theitalians_url} target="_blank" rel="noreferrer">
                                     <Button variant="outline">Guarda su YouTube</Button>

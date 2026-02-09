@@ -2,103 +2,221 @@ import { SectionNumber } from '../ui/SectionNumber';
 
 export function Team() {
     return (
-        <section id="team" className="py-32 bg-bg-elevated relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+        <section id="team" className="relative overflow-hidden bg-[#0B0B0B] py-28 md:py-36">
+            {/* ================= BACKGROUND (premium black) ================= */}
+            <div className="absolute inset-0 pointer-events-none">
+                {/* Base depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#0B0B0B] to-[#050505]" />
+
+                {/* Accent spotlight */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_-10%,rgba(246,158,0,0.14),transparent_60%)]" />
+
+                {/* Subtle side glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_60%_at_85%_35%,rgba(246,158,0,0.08),transparent_65%)]" />
+
+                {/* Editorial grid */}
+                <div className="absolute inset-0 opacity-[0.18]">
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:64px_64px]" />
+                    <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,#000_70%,transparent_100%)] bg-[#0B0B0B]" />
+                </div>
+
+                {/* Grain */}
+                <div
+                    className="absolute inset-0 opacity-[0.035]"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                    }}
+                />
+
+                {/* Decorative rings */}
+                <div className="absolute -top-24 -left-24 h-[520px] w-[520px] rounded-full border border-white/5" />
+                <div className="absolute -top-10 -left-10 h-[420px] w-[420px] rounded-full border border-[#F69E00]/10" />
+                <div className="absolute bottom-[-260px] right-[-260px] h-[560px] w-[560px] rounded-full border border-[#F69E00]/10" />
+            </div>
+
+            <div className="relative z-10 mx-auto max-w-7xl px-6">
+                {/* ================= HEADER ================= */}
+                <div className="mb-16 md:mb-24 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                     <div className="max-w-2xl">
                         <SectionNumber number="04" className="mb-6" />
-                        <h2 className="font-display text-5xl md:text-7xl text-white leading-none tracking-tight">
-                            Chi <span className="text-accent italic font-light">Siamo.</span>
+                        <h2 className="font-heading font-bold text-[clamp(2.3rem,4.6vw,4.4rem)] leading-[0.95] tracking-tight text-white">
+                            Chi <span className="italic font-light text-[#F69E00]">Siamo.</span>
                         </h2>
                     </div>
-                    <p className="text-text-muted text-lg max-w-md font-light border-l border-white/10 pl-6 text-justify">
-                        THE ITALIANS nasce dall'unione tra storytelling umano e struttura produttiva solida. Un progetto editoriale che entra nelle aziende per dare voce a chi le costruisce ogni giorno.
-                    </p>
+
+                    <div className="max-w-md">
+                        <p className="font-body text-white/65 text-lg font-light leading-relaxed border-l border-white/10 pl-6">
+                            THE ITALIANS nasce dall’unione tra storytelling umano e struttura produttiva solida. Un progetto editoriale
+                            che entra nelle aziende per dare voce a chi le costruisce ogni giorno.
+                        </p>
+                    </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-                    {/* RICCARDO SEGNA */}
+                {/* ================= GRID ================= */}
+                <div className="grid gap-10 md:grid-cols-2 md:gap-16">
+                    {/* ================= CARD: RICCARDO ================= */}
                     <div className="group">
-                        <div className="relative aspect-[3/4] w-full max-w-sm mx-auto bg-black mb-8 overflow-hidden rounded-sm">
-                            <img
-                                src="/riccardo-segna.jpg"
-                                alt="Riccardo Segna"
-                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+                        {/* Media frame */}
+                        <div className="relative mx-auto mb-8 w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_30px_90px_rgba(0,0,0,0.65)]">
+                            {/* Accent top line */}
+                            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-[#F69E00]/45 via-white/10 to-transparent opacity-70 z-20" />
 
-                            <div className="absolute bottom-6 left-6 right-6">
-                                <div className="text-accent text-xs font-mono mb-2 track-widest">CONTENT CREATOR</div>
-                                <h3 className="text-3xl font-display text-white">Riccardo Segna</h3>
+                            <div className="relative aspect-[3/4]">
+                                <img
+                                    src="/riccardo-segna.jpg"
+                                    alt="Riccardo Segna"
+                                    className="h-full w-full object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                                />
+
+                                {/* Cinematic overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+
+                                {/* Badge */}
+                                <div className="absolute left-6 top-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/35 px-4 py-2 backdrop-blur-md">
+                                    <span className="h-2 w-2 rounded-full bg-[#F69E00]" />
+                                    <span className="font-body text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">
+                                        CONTENT CREATOR
+                                    </span>
+                                </div>
+
+                                {/* Name */}
+                                <div className="absolute bottom-6 left-6 right-6">
+                                    <h3 className="font-heading text-3xl font-bold tracking-tight text-white">Riccardo Segna</h3>
+                                    <p className="mt-2 font-body text-[12px] tracking-[0.22em] uppercase text-[#F69E00]/90">
+                                        Host · Interviewer
+                                    </p>
+                                </div>
                             </div>
+
+                            {/* Soft hover glow */}
+                            <div className="pointer-events-none absolute -bottom-24 left-1/2 h-48 w-[520px] -translate-x-1/2 rounded-full bg-[#F69E00]/10 blur-[70px] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
                         </div>
 
+                        {/* Body */}
                         <div className="space-y-6">
-                            <p className="text-text-subtle leading-relaxed font-light">
-                                Il volto del progetto e l'intervistatore. Racconta persone e imprese con uno stile diretto, umano e spontaneo. Le sue interviste sono autentiche, mai costruite, e mettono al centro le storie, i valori e le persone dietro le aziende.
+                            <p className="font-body text-white/65 leading-relaxed font-light">
+                                Il volto del progetto e l’intervistatore. Racconta persone e imprese con uno stile diretto, umano e
+                                spontaneo. Le sue interviste sono autentiche, mai costruite, e mettono al centro le storie, i valori e le
+                                persone dietro le aziende.
                             </p>
 
+                            {/* Metrics */}
                             <div className="grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
-                                <a href="https://instagram.com/riccardosegna" target="_blank" rel="noopener noreferrer" className="block hover:opacity-80 transition-opacity">
-                                    <div className="text-xl text-white font-display">155k</div>
-                                    <div className="text-[10px] text-text-muted uppercase tracking-widest mt-1">Instagram</div>
+                                <a
+                                    href="https://instagram.com/riccardosegna"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group/m block rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-all duration-500 hover:border-[#F69E00]/30 hover:bg-white/[0.03]"
+                                >
+                                    <div className="font-heading text-xl font-bold text-white">155k</div>
+                                    <div className="mt-1 font-body text-[10px] uppercase tracking-widest text-white/45">
+                                        Instagram
+                                    </div>
+                                    <div className="mt-3 h-px w-full bg-gradient-to-r from-[#F69E00]/40 to-transparent opacity-60" />
                                 </a>
-                                <a href="https://tiktok.com/@riccardosegna" target="_blank" rel="noopener noreferrer" className="block hover:opacity-80 transition-opacity">
-                                    <div className="text-xl text-white font-display">330k+</div>
-                                    <div className="text-[10px] text-text-muted uppercase tracking-widest mt-1">TikTok</div>
+
+                                <a
+                                    href="https://tiktok.com/@riccardosegna"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group/m block rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-all duration-500 hover:border-[#F69E00]/30 hover:bg-white/[0.03]"
+                                >
+                                    <div className="font-heading text-xl font-bold text-white">330k+</div>
+                                    <div className="mt-1 font-body text-[10px] uppercase tracking-widest text-white/45">TikTok</div>
+                                    <div className="mt-3 h-px w-full bg-gradient-to-r from-[#F69E00]/40 to-transparent opacity-60" />
                                 </a>
-                                <div>
-                                    <div className="text-xl text-white font-display">30M+</div>
-                                    <div className="text-[10px] text-text-muted uppercase tracking-widest mt-1">Views</div>
+
+                                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                                    <div className="font-heading text-xl font-bold text-white">30M+</div>
+                                    <div className="mt-1 font-body text-[10px] uppercase tracking-widest text-white/45">Views</div>
+                                    <div className="mt-3 h-px w-full bg-gradient-to-r from-[#F69E00]/40 to-transparent opacity-60" />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* DELOS LAB */}
-                    <div className="group md:mt-24">
-                        <div className="relative aspect-[3/4] w-full max-w-sm mx-auto bg-[#0a0a0a] mb-8 overflow-hidden rounded-sm border border-white/5 group-hover:border-accent/20 transition-colors duration-500">
-                            <img
-                                src="/delos-lab.png"
-                                alt="Delos Lab"
-                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
-                            />
+                    {/* ================= CARD: DELOS ================= */}
+                    <div className="group md:mt-20">
+                        {/* Media frame */}
+                        <div className="relative mx-auto mb-8 w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] shadow-[0_30px_90px_rgba(0,0,0,0.65)] transition-colors duration-500 group-hover:border-[#F69E00]/20">
+                            {/* Accent top line */}
+                            <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-[#F69E00]/45 via-white/10 to-transparent opacity-70 z-20" />
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+                            <div className="relative aspect-[3/4]">
+                                <img
+                                    src="/delos-lab.png"
+                                    alt="Delos Lab"
+                                    className="h-full w-full object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                                />
 
-                            <div className="absolute bottom-6 left-6 right-6">
-                                <div className="text-accent text-xs font-mono mb-2 track-widest">PRODUCTION PARTNER</div>
-                                <h3 className="text-3xl font-display text-white">Delos Lab</h3>
+                                {/* Cinematic overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+
+                                {/* Badge */}
+                                <div className="absolute left-6 top-6 inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/35 px-4 py-2 backdrop-blur-md">
+                                    <span className="h-2 w-2 rounded-full bg-[#F69E00]" />
+                                    <span className="font-body text-[10px] font-semibold tracking-[0.28em] uppercase text-white/80">
+                                        PRODUCTION PARTNER
+                                    </span>
+                                </div>
+
+                                {/* Name */}
+                                <div className="absolute bottom-6 left-6 right-6">
+                                    <h3 className="font-heading text-3xl font-bold tracking-tight text-white">Delos Lab</h3>
+                                    <p className="mt-2 font-body text-[12px] tracking-[0.22em] uppercase text-[#F69E00]/90">
+                                        Direction · Production · Post
+                                    </p>
+                                </div>
                             </div>
+
+                            {/* Soft hover glow */}
+                            <div className="pointer-events-none absolute -bottom-24 left-1/2 h-48 w-[520px] -translate-x-1/2 rounded-full bg-[#F69E00]/10 blur-[70px] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
                         </div>
 
+                        {/* Body */}
                         <div className="space-y-6">
-                            <p className="text-text-subtle leading-relaxed font-light">
-                                Il team creativo e produttivo che cura la regia, la produzione e la post-produzione. Trasforma le storie in contenuti coerenti, curati e strategici, mantenendo uno stile cinematografico e professionale.
+                            <p className="font-body text-white/65 leading-relaxed font-light">
+                                Il team creativo e produttivo che cura la regia, la produzione e la post-produzione. Trasforma le storie in
+                                contenuti coerenti, curati e strategici, mantenendo uno stile cinematografico e professionale.
                             </p>
 
+                            {/* Metrics */}
                             <div className="grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
-                                <div>
-                                    <div className="text-xl text-white font-display">4B+</div>
-                                    <div className="text-[10px] text-text-muted uppercase tracking-widest mt-1">Views Gen.</div>
+                                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-all duration-500 hover:border-[#F69E00]/25 hover:bg-white/[0.03]">
+                                    <div className="font-heading text-xl font-bold text-white">4B+</div>
+                                    <div className="mt-1 font-body text-[10px] uppercase tracking-widest text-white/45">Views Gen.</div>
+                                    <div className="mt-3 h-px w-full bg-gradient-to-r from-[#F69E00]/40 to-transparent opacity-60" />
                                 </div>
-                                <div>
-                                    <div className="text-xl text-white font-display">5M+</div>
-                                    <div className="text-[10px] text-text-muted uppercase tracking-widest mt-1">Followers</div>
+                                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-all duration-500 hover:border-[#F69E00]/25 hover:bg-white/[0.03]">
+                                    <div className="font-heading text-xl font-bold text-white">5M+</div>
+                                    <div className="mt-1 font-body text-[10px] uppercase tracking-widest text-white/45">Followers</div>
+                                    <div className="mt-3 h-px w-full bg-gradient-to-r from-[#F69E00]/40 to-transparent opacity-60" />
                                 </div>
-                                <div>
-                                    <div className="text-xl text-white font-display">Data</div>
-                                    <div className="text-[10px] text-text-muted uppercase tracking-widest mt-1">Driven</div>
+                                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-all duration-500 hover:border-[#F69E00]/25 hover:bg-white/[0.03]">
+                                    <div className="font-heading text-xl font-bold text-white">Data</div>
+                                    <div className="mt-1 font-body text-[10px] uppercase tracking-widest text-white/45">Driven</div>
+                                    <div className="mt-3 h-px w-full bg-gradient-to-r from-[#F69E00]/40 to-transparent opacity-60" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-24 text-center">
-                    <p className="text-2xl md:text-3xl font-display text-white italic opacity-80 max-w-3xl mx-auto">
-                        "Due visioni diverse, un solo racconto: quello delle imprese italiane."
-                    </p>
+                {/* ================= QUOTE ================= */}
+                <div className="mt-20 md:mt-28 text-center">
+                    <div className="mx-auto max-w-3xl">
+                        <div className="mb-6 flex items-center justify-center gap-4">
+                            <div className="h-px w-10 bg-white/10" />
+                            <span className="font-body text-[11px] tracking-[0.28em] uppercase text-white/40">
+                                Vision
+                            </span>
+                            <div className="h-px w-10 bg-white/10" />
+                        </div>
+
+                        <p className="font-heading text-2xl md:text-3xl font-bold italic text-white/85">
+                            “Due visioni diverse, un solo racconto: quello delle imprese italiane.”
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>

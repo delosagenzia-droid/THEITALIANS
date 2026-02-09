@@ -47,8 +47,8 @@ export default async function AdminDashboard({
             <div className="max-w-7xl mx-auto">
                 <div className="flex justify-between items-center mb-12">
                     <div>
-                        <p className="text-text-subtle text-xs uppercase tracking-widest mb-1">Admin Panel</p>
-                        <h1 className="text-3xl font-display text-white">Candidature</h1>
+                        <p className="text-text-subtle text-xs uppercase tracking-widest mb-1 font-body font-medium">Admin Panel</p>
+                        <h1 className="text-3xl font-heading font-bold text-white">Candidature</h1>
                     </div>
                     <form action="/auth/signout" method="post">
                         <Button size="sm" variant="outline">Logout</Button>
@@ -75,17 +75,17 @@ export default async function AdminDashboard({
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="border-b border-white/10 bg-white/5">
-                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-medium w-32">Data</th>
-                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-medium">Azienda</th>
-                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-medium">Contatto</th>
-                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-medium w-48">Stato</th>
-                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-medium w-24">Azioni</th>
+                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-body font-medium w-32">Data</th>
+                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-body font-medium">Azienda</th>
+                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-body font-medium">Contatto</th>
+                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-body font-medium w-48">Stato</th>
+                                <th className="p-4 text-xs uppercase tracking-widest text-text-subtle font-body font-medium w-24">Azioni</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
                             {applications?.map((app: any) => (
                                 <tr key={app.id} className="hover:bg-white/[0.02] transition-colors group">
-                                    <td className="p-4 text-text-muted text-sm font-mono">
+                                    <td className="p-4 text-text-muted text-sm font-body">
                                         {new Date(app.submitted_at).toLocaleDateString('it-IT')}
                                     </td>
                                     <td className="p-4">
