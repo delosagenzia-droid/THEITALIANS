@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Button } from '../ui/Button';
 import Link from 'next/link';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { motion, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 
 export function Hero() {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -95,7 +95,7 @@ export function Hero() {
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
                 {/* Layer 1: Premium Rings (Moves with mouse) */}
                 <motion.div
-                    style={!isMobile ? { x: layer1X, y: layer1Y, rotate: 0 } : undefined}
+                    style={!isMobile ? { x: layer1X, y: layer1Y, rotate: 0, willChange: 'transform' } : undefined}
                     className="absolute inset-0"
                 >
                     <div
@@ -106,7 +106,7 @@ export function Hero() {
 
                 {/* Layer 2: Inner Ring (Moves opposite to mouse for depth) */}
                 <motion.div
-                    style={!isMobile ? { x: layer2X, y: layer2Y, rotate: 0 } : undefined}
+                    style={!isMobile ? { x: layer2X, y: layer2Y, rotate: 0, willChange: 'transform' } : undefined}
                     className="absolute inset-0"
                 >
                     <div
@@ -117,7 +117,7 @@ export function Hero() {
 
                 {/* Layer 3: Floating Particles / Orbs */}
                 <motion.div
-                    style={!isMobile ? { x: layer3X, y: layer3Y } : undefined}
+                    style={!isMobile ? { x: layer3X, y: layer3Y, willChange: 'transform' } : undefined}
                     className="absolute inset-0"
                 >
                     {/* Orb 1 */}

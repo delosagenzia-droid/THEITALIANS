@@ -16,14 +16,14 @@ export function Team() {
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_60%_at_85%_35%,rgba(246,158,0,0.08),transparent_65%)]" />
 
                 {/* Editorial grid */}
-                <div className="absolute inset-0 opacity-[0.18]">
+                <div className="absolute inset-0 opacity-[0.18] hidden md:block">
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:64px_64px]" />
                     <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,#000_70%,transparent_100%)] bg-[#0B0B0B]" />
                 </div>
 
                 {/* Grain */}
                 <div
-                    className="absolute inset-0 opacity-[0.035]"
+                    className="absolute inset-0 opacity-[0.035] hidden md:block"
                     style={{
                         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
                     }}
@@ -70,6 +70,8 @@ export function Team() {
                                     className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
                                     sizes="(max-width: 768px) 100vw, 400px"
                                     quality={80}
+                                    loading="lazy"
+                                    decoding="async"
                                 />
 
                                 {/* Cinematic overlay */}
@@ -154,6 +156,8 @@ export function Team() {
                                     className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
                                     sizes="(max-width: 768px) 100vw, 400px"
                                     quality={80}
+                                    loading="lazy"
+                                    decoding="async"
                                 />
 
                                 {/* Cinematic overlay */}

@@ -56,14 +56,14 @@ export async function Format() {
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_60%_at_85%_35%,rgba(246,158,0,0.08),transparent_65%)]" />
 
                 {/* Editorial grid (very subtle) */}
-                <div className="absolute inset-0 opacity-[0.20]">
+                <div className="absolute inset-0 opacity-[0.20] hidden md:block">
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:64px_64px]" />
                     <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,#000_70%,transparent_100%)] bg-[#0B0B0B]" />
                 </div>
 
                 {/* Film grain */}
                 <div
-                    className="absolute inset-0 opacity-[0.035]"
+                    className="absolute inset-0 opacity-[0.035] hidden md:block"
                     style={{
                         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
                     }}
@@ -194,6 +194,8 @@ export async function Format() {
                                                 className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-40"
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 840px"
                                                 quality={80}
+                                                loading="lazy"
+                                                decoding="async"
                                             />
                                         </div>
                                     )}

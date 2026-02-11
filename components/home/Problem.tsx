@@ -142,22 +142,25 @@ export function Problem() {
 
                 {/* ================= RIGHT: VERTICAL VIDEO MOCKUP ================= */}
                 <div className="relative perspective-[2000px]">
-                    {/* Pulsing Hover glow */}
-                    <motion.div
-                        initial={{ opacity: 0.4, scale: 0.9 }}
-                        animate={{ opacity: [0.4, 0.7, 0.4], scale: [0.9, 1.05, 0.9] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -inset-10 rounded-[48px] bg-[#F69E00]/15 blur-[100px]"
-                    />
+                    {/* Pulsing Hover glow — desktop only */}
+                    {!isMobile && (
+                        <motion.div
+                            initial={{ opacity: 0.4, scale: 0.9 }}
+                            animate={{ opacity: [0.4, 0.7, 0.4], scale: [0.9, 1.05, 0.9] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -inset-10 rounded-[48px] bg-[#F69E00]/15 blur-[100px]"
+                        />
+                    )}
 
-                    {/* Phone-like vertical frame with Floating Animation (Disabled on mobile) */}
-                    <div className="relative mx-auto w-full max-w-[380px] preserve-3d md:animate-[float_6s_ease-in-out_infinite]">
+                    {/* Phone-like vertical frame */}
+                    <div className="relative mx-auto w-full max-w-[380px] preserve-3d">
                         {/* Wrapper for motion (desktop only) or static (mobile) */}
                         <motion.div
                             className="relative w-full h-full"
                             initial={{ y: 0 }}
                             animate={!isMobile ? { y: [-10, 10, -10] } : undefined}
                             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                            style={{ willChange: !isMobile ? 'transform' : undefined }}
                         >
                             {/* Floating Interaction Elements (Orbiting) */}
                             <motion.div
