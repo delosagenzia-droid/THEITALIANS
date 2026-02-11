@@ -207,7 +207,7 @@ export function Problem() {
                                                 className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
                                             >
                                                 <source
-                                                    src="https://lcsckuzjasqtxsgvnzse.supabase.co/storage/v1/object/public/brand/VIDEO_rick%20(1)%20(1).mp4"
+                                                    src="https://lcsckuzjasqtxsgvnzse.supabase.co/storage/v1/object/public/brand/VIDEO_rick%20(1)%20(1).mp4?v=optimized"
                                                     type="video/mp4"
                                                 />
                                             </video>
