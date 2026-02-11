@@ -17,7 +17,7 @@ export function Problem() {
                     observer.disconnect();
                 }
             },
-            { threshold: 0.1 } // Load when 10% visible
+            { rootMargin: '200px' } // Preload 200px before appearing
         );
 
         if (videoRef.current) {
@@ -202,7 +202,7 @@ export function Problem() {
                                                 loop
                                                 muted
                                                 playsInline
-                                                preload="none"
+                                                preload="metadata"
                                                 poster="/poster-placeholder.webp"
                                                 className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
                                             >
@@ -282,7 +282,6 @@ export function Problem() {
                                 </div>
                             </div>
                         </div>
-
                         {/* Bottom Reflection */}
                         <div className="absolute -bottom-12 left-10 right-10 h-4 bg-black/20 blur-xl rounded-[100%]" />
                     </motion.div>
