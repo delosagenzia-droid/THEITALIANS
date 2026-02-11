@@ -10,12 +10,14 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "600", "700"], // Regular, SemiBold, Bold
   variable: "--font-heading",
+  display: "swap",
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"], // Light, Regular, Medium, SemiBold
   variable: "--font-body",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

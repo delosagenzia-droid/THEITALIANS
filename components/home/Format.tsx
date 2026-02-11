@@ -193,7 +193,7 @@ export async function Format() {
                                                 fill
                                                 className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-40"
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 840px"
-                                                priority
+                                                quality={80}
                                             />
                                         </div>
                                     )}

@@ -1,8 +1,30 @@
 'use client';
 
 import { SectionNumber } from '../ui/SectionNumber';
+import { useEffect, useRef, useState } from 'react';
 
 export function ApplicationForm() {
+    const iframeRef = useRef<HTMLDivElement>(null);
+    const [isIframeVisible, setIsIframeVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setIsIframeVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: '300px' } // Preload 300px before appearing
+        );
+
+        if (iframeRef.current) {
+            observer.observe(iframeRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <section id="candidati" className="relative overflow-hidden bg-[#0B0B0B] py-24 md:py-32">
             {/* ================= BACKGROUND (premium black) ================= */}
@@ -123,14 +145,16 @@ export function ApplicationForm() {
                             <div className="h-6 w-24 rounded-full border border-white/10 bg-white/[0.02]" />
                         </div>
 
-                        {/* Iframe */}
-                        <div className="w-full h-[620px] md:h-[740px]">
-                            <iframe
-                                src="https://form.asana.com/?k=B70srIf2zslDQP0oN0b2Hw&d=1206426076358288&embed=true"
-                                className="w-full h-full border-0"
-                                title="Modulo di Candidatura Asana"
-                                loading="lazy"
-                            />
+                        {/* Iframe Container with Lazy Loading */}
+                        <div ref={iframeRef} className="w-full h-[620px] md:h-[740px]">
+                            {isIframeVisible && (
+                                <iframe
+                                    src="https://form.asana.com/?k=B70srIf2zslDQP0oN0b2Hw&d=1206426076358288&embed=true"
+                                    className="w-full h-full border-0"
+                                    title="Modulo di Candidatura Asana"
+                                    loading="lazy"
+                                />
+                            )}
                         </div>
 
                         {/* Footer */}

@@ -69,6 +69,7 @@ export function Team() {
                                     fill
                                     className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
                                     sizes="(max-width: 768px) 100vw, 400px"
+                                    quality={80}
                                 />
 
                                 {/* Cinematic overlay */}
@@ -152,6 +153,7 @@ export function Team() {
                                     fill
                                     className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
                                     sizes="(max-width: 768px) 100vw, 400px"
+                                    quality={80}
                                 />
 
                                 {/* Cinematic overlay */}

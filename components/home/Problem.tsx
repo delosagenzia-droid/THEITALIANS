@@ -3,8 +3,30 @@
 import { SectionNumber } from '../ui/SectionNumber';
 import { motion } from 'framer-motion';
 import { Heart, MessageCircle, Share2, Play } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 export function Problem() {
+    const videoRef = useRef<HTMLDivElement>(null);
+    const [isInView, setIsInView] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setIsInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 } // Load when 10% visible
+        );
+
+        if (videoRef.current) {
+            observer.observe(videoRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
     return (
         <section className="relative overflow-hidden bg-white py-24 md:py-40">
             {/* ================= BACKGROUND (clean editorial) ================= */}
@@ -164,7 +186,7 @@ export function Problem() {
                                 {/* Screen */}
                                 <div className="relative overflow-hidden rounded-[38px] bg-[#0B0B0B]">
                                     {/* 9:16 aspect ratio */}
-                                    <div className="relative aspect-[9/16]">
+                                    <div ref={videoRef} className="relative aspect-[9/16]">
                                         {/* Gradient overlay for readability */}
                                         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
 
@@ -174,18 +196,22 @@ export function Problem() {
                                         </div>
 
                                         {/* VIDEO */}
-                                        <video
-                                            autoPlay
-                                            loop
-                                            muted
-                                            playsInline
-                                            className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
-                                        >
-                                            <source
-                                                src="https://lcsckuzjasqtxsgvnzse.supabase.co/storage/v1/object/public/brand/VIDEO_rick%20(1)%20(1).mp4"
-                                                type="video/mp4"
-                                            />
-                                        </video>
+                                        {isInView && (
+                                            <video
+                                                autoPlay
+                                                loop
+                                                muted
+                                                playsInline
+                                                preload="none"
+                                                poster="/poster-placeholder.webp"
+                                                className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
+                                            >
+                                                <source
+                                                    src="https://lcsckuzjasqtxsgvnzse.supabase.co/storage/v1/object/public/brand/VIDEO_rick%20(1)%20(1).mp4"
+                                                    type="video/mp4"
+                                                />
+                                            </video>
+                                        )}
 
                                         {/* Play Button Overlay (Dynamic) */}
                                         <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
