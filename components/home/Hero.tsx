@@ -50,7 +50,12 @@ export function Hero() {
     return (
         <section
             ref={containerRef}
-            onMouseMove={handleMouseMove}
+            onMouseMove={(e) => {
+                // Disable parallax on mobile/touch
+                if (window.matchMedia('(hover: hover)').matches) {
+                    handleMouseMove(e);
+                }
+            }}
             className="relative min-h-screen flex items-center overflow-hidden bg-[#1D1D1D] perspective-1000"
         >
             {/* ===================== BACKGROUND ===================== */}
@@ -71,8 +76,9 @@ export function Hero() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_55%_at_85%_30%,rgba(246,158,0,0.08),transparent_65%)] z-0" />
 
             {/* Film grain overlay (keep, but cleaner) */}
+            {/* Film grain overlay (keep, but cleaner) */}
             <div
-                className="absolute inset-0 opacity-[0.035] pointer-events-none z-50"
+                className="absolute inset-0 opacity-[0.035] pointer-events-none z-50 hidden md:block"
                 style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
                 }}
