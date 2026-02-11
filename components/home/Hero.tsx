@@ -7,6 +7,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTe
 
 export function Hero() {
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Mouse tracking for 3D parallax
@@ -35,6 +36,7 @@ export function Hero() {
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoaded(true), 100);
+        setIsMobile(window.innerWidth < 768);
         return () => clearTimeout(timer);
     }, []);
 
@@ -93,7 +95,7 @@ export function Hero() {
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
                 {/* Layer 1: Premium Rings (Moves with mouse) */}
                 <motion.div
-                    style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { x: layer1X, y: layer1Y, rotate: 0 } : {}}
+                    style={!isMobile ? { x: layer1X, y: layer1Y, rotate: 0 } : undefined}
                     className="absolute inset-0"
                 >
                     <div
@@ -104,7 +106,7 @@ export function Hero() {
 
                 {/* Layer 2: Inner Ring (Moves opposite to mouse for depth) */}
                 <motion.div
-                    style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { x: layer2X, y: layer2Y, rotate: 0 } : {}}
+                    style={!isMobile ? { x: layer2X, y: layer2Y, rotate: 0 } : undefined}
                     className="absolute inset-0"
                 >
                     <div
@@ -115,7 +117,7 @@ export function Hero() {
 
                 {/* Layer 3: Floating Particles / Orbs */}
                 <motion.div
-                    style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { x: layer3X, y: layer3Y } : {}}
+                    style={!isMobile ? { x: layer3X, y: layer3Y } : undefined}
                     className="absolute inset-0"
                 >
                     {/* Orb 1 */}

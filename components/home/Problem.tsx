@@ -8,8 +8,11 @@ import { useEffect, useRef, useState } from 'react';
 export function Problem() {
     const videoRef = useRef<HTMLDivElement>(null);
     const [isInView, setIsInView] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
@@ -153,7 +156,7 @@ export function Problem() {
                         <motion.div
                             className="relative w-full h-full"
                             initial={{ y: 0 }}
-                            animate={typeof window !== 'undefined' && window.innerWidth >= 768 ? { y: [-10, 10, -10] } : {}}
+                            animate={!isMobile ? { y: [-10, 10, -10] } : undefined}
                             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                         >
                             {/* Floating Interaction Elements (Orbiting) */}
