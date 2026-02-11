@@ -58,7 +58,7 @@ export function Problem() {
                         <div className="flex items-center gap-4 pt-1">
                             <div className="h-px flex-1 bg-gradient-to-r from-[#F69E00]/60 via-black/10 to-transparent" />
                             <span className="font-body text-[11px] uppercase tracking-[0.28em] font-semibold text-[#F69E00]">
-                                The Problem
+                                Il problema
                             </span>
                             <div className="h-px w-10 bg-black/10" />
                         </div>
