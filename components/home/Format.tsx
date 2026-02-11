@@ -3,6 +3,7 @@ import { Camera, Clapperboard, MessageSquare, Send, ChevronRight } from 'lucide-
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import { Button } from '../ui/Button';
+import Image from 'next/image';
 
 const steps = [
     {
@@ -185,11 +186,16 @@ export async function Format() {
                             {episodes[0] && (
                                 <div className="lg:col-span-2 group relative aspect-[16/9] overflow-hidden rounded-2xl border border-white/10 bg-bg-card">
                                     {episodes[0].thumbnail_url && (
-                                        <img
-                                            src={episodes[0].thumbnail_url}
-                                            alt={episodes[0].company_name}
-                                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-40"
-                                        />
+                                        <div className="relative h-full w-full">
+                                            <Image
+                                                src={episodes[0].thumbnail_url}
+                                                alt={episodes[0].company_name || 'Episodio The Italians'}
+                                                fill
+                                                className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-40"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 840px"
+                                                priority
+                                            />
+                                        </div>
                                     )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent p-8 flex flex-col justify-end">
                                         <span className="mb-3 inline-block w-fit rounded-full border border-[#F69E00]/40 bg-[#F69E00]/10 px-3 py-1 text-[10px] uppercase tracking-widest text-[#F69E00] backdrop-blur-md">

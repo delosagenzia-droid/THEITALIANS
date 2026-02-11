@@ -129,6 +129,7 @@ export function ApplicationForm() {
                                 src="https://form.asana.com/?k=B70srIf2zslDQP0oN0b2Hw&d=1206426076358288&embed=true"
                                 className="w-full h-full border-0"
                                 title="Modulo di Candidatura Asana"
+                                loading="lazy"
                             />
                         </div>
 

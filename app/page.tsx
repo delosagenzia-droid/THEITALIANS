@@ -1,10 +1,24 @@
 import { Hero } from "@/components/home/Hero";
-import { Problem } from "@/components/home/Problem";
 import { Format } from "@/components/home/Format";
-import { Team } from "@/components/home/Team";
-import { ApplicationForm } from "@/components/home/ApplicationForm";
 import { DividerLine } from "@/components/ui/DividerLine";
 import { Metadata } from "next";
+import dynamic from 'next/dynamic';
+
+// Lazy load heavy components below the fold
+const Problem = dynamic(() => import('@/components/home/Problem').then(mod => mod.Problem), {
+  loading: () => <div className="h-[800px] bg-white animate-pulse" /> // Skeleton placeholder
+});
+
+const Team = dynamic(() => import('@/components/home/Team').then(mod => mod.Team), {
+  loading: () => <div className="h-[800px] bg-[#0B0B0B]" />
+});
+
+const ApplicationForm = dynamic(() => import('@/components/home/ApplicationForm').then(mod => mod.ApplicationForm), {
+  loading: () => <div className="h-[600px] bg-[#0B0B0B]" />
+});
+
+// ISR: Revalidate every hour
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "THE ITALIANS | Raccontiamo le Imprese Italiane",

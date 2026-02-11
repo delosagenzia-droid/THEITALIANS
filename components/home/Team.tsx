@@ -1,4 +1,5 @@
 import { SectionNumber } from '../ui/SectionNumber';
+import Image from 'next/image';
 
 export function Team() {
     return (
@@ -62,10 +63,12 @@ export function Team() {
                             <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-[#F69E00]/45 via-white/10 to-transparent opacity-70 z-20" />
 
                             <div className="relative aspect-[3/4]">
-                                <img
+                                <Image
                                     src="/riccardo-segna.jpg"
                                     alt="Riccardo Segna"
-                                    className="h-full w-full object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                                    fill
+                                    className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                                    sizes="(max-width: 768px) 100vw, 400px"
                                 />
 
                                 {/* Cinematic overlay */}
@@ -143,10 +146,12 @@ export function Team() {
                             <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-[#F69E00]/45 via-white/10 to-transparent opacity-70 z-20" />
 
                             <div className="relative aspect-[3/4]">
-                                <img
+                                <Image
                                     src="/delos-lab.png"
                                     alt="Delos Lab"
-                                    className="h-full w-full object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                                    fill
+                                    className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                                    sizes="(max-width: 768px) 100vw, 400px"
                                 />
 
                                 {/* Cinematic overlay */}
