@@ -93,7 +93,7 @@ export function Hero() {
             <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
                 {/* Layer 1: Premium Rings (Moves with mouse) */}
                 <motion.div
-                    style={{ x: layer1X, y: layer1Y, rotate: 0 }}
+                    style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { x: layer1X, y: layer1Y, rotate: 0 } : {}}
                     className="absolute inset-0"
                 >
                     <div
@@ -104,7 +104,7 @@ export function Hero() {
 
                 {/* Layer 2: Inner Ring (Moves opposite to mouse for depth) */}
                 <motion.div
-                    style={{ x: layer2X, y: layer2Y, rotate: 0 }}
+                    style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { x: layer2X, y: layer2Y, rotate: 0 } : {}}
                     className="absolute inset-0"
                 >
                     <div
@@ -115,7 +115,7 @@ export function Hero() {
 
                 {/* Layer 3: Floating Particles / Orbs */}
                 <motion.div
-                    style={{ x: layer3X, y: layer3Y }}
+                    style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { x: layer3X, y: layer3Y } : {}}
                     className="absolute inset-0"
                 >
                     {/* Orb 1 */}
