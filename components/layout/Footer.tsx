@@ -110,7 +110,7 @@ export function Footer() {
                                         Via Gaetano Donizetti 7/b, 00198, Roma (RM)
                                     </span>
                                     <br />
-                                    Cap. Sociale: <span className="text-white/70">€10.000,00</span>
+
                                 </div>
                             </div>
 

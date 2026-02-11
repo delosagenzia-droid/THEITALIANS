@@ -1,5 +1,16 @@
 import { SectionNumber } from '@/components/ui/SectionNumber';
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy | THE ITALIANS",
+    description: "Informativa sulla privacy di THE ITALIANS.",
+    robots: {
+        index: false,
+        follow: true,
+    },
+};
+
 export default function PrivacyPolicy() {
     return (
         <section className="py-32 bg-bg px-6">

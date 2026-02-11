@@ -2,6 +2,7 @@ import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import { Metadata } from 'next';
 
 interface EpisodePageProps {
     params: {
@@ -19,7 +20,7 @@ export async function generateStaticParams() {
     return episodes?.map(({ id }) => ({ id })) || [];
 }
 
-export default async function EpisodePage({ params }: EpisodePageProps) {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     const { data: episode } = await supabase
         .from('episodes')
         .select('*')
@@ -27,11 +28,50 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
         .single();
 
     if (!episode) {
-        notFound();
+        return {
+            title: 'Episodio Non Trovato | THE ITALIANS',
+        };
     }
 
+    return {
+        title: `${episode.company_name} - ${episode.sector} | THE ITALIANS`,
+        description: `Scopri la storia di ${episode.company_name}, azienda ${episode.sector} a ${episode.location}. Un racconto di eccellenza italiana.`,
+        openGraph: {
+            title: `${episode.company_name} - ${episode.sector} | THE ITALIANS`,
+            description: `Scopri la storia di ${episode.company_name}.`,
+            images: [episode.thumbnail_url || "https://the-italians.it/og/default.jpg"],
+        },
+    };
+}
+
+export default async function EpisodePage({ params }: { params: { id: string } }) {
+    const { data: episode } = await supabase
+        .from('episodes')
+        .select('*')
+        .eq('id', params.id)
+        .single();
+
+    if (!episode) return notFound();
+
+    const videoJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "VideoObject",
+        "name": `THE ITALIANS - ${episode.company_name}`,
+        "description": `Scopri la storia di ${episode.company_name}, ${episode.sector} a ${episode.location}.`,
+        "thumbnailUrl": episode.thumbnail_url || "https://the-italians.it/og/default.jpg",
+        "uploadDate": episode.publish_date,
+        "duration": episode.duration, // Ensure format is ISO 8601 (blocks like PT5M30S) if possible, or simple string
+        "contentUrl": `https://the-italians.it/storie/${episode.id}`,
+        "author": { "@type": "Person", "name": "Riccardo Segna" },
+        "publisher": { "@type": "Organization", "name": "THE ITALIANS" }
+    };
+
     return (
-        <div className="pt-20">
+        <article className="min-h-screen bg-[#0B0B0B] text-white pt-32 pb-20">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(videoJsonLd) }}
+            />
             {/* Hero Section */}
             <div className="relative h-[60vh] md:h-[80vh] w-full bg-neutral-900">
                 {episode.hero_image_url ? (
@@ -120,6 +160,6 @@ export default async function EpisodePage({ params }: EpisodePageProps) {
                 </div>
 
             </div>
-        </div>
+        </article>
     );
 }

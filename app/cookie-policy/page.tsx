@@ -1,5 +1,16 @@
 import { SectionNumber } from '@/components/ui/SectionNumber';
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Cookie Policy | THE ITALIANS",
+    description: "Informativa sui cookie di THE ITALIANS.",
+    robots: {
+        index: false,
+        follow: true,
+    },
+};
+
 export default function CookiePolicy() {
     return (
         <section className="py-32 bg-bg px-6">

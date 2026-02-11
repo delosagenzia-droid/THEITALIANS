@@ -1,5 +1,16 @@
 import { SectionNumber } from '@/components/ui/SectionNumber';
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Termini e Condizioni | THE ITALIANS",
+    description: "Termini e condizioni di utilizzo del servizio THE ITALIANS.",
+    robots: {
+        index: false,
+        follow: true,
+    },
+};
+
 export default function TermsConditions() {
     return (
         <section className="py-32 bg-bg px-6">
