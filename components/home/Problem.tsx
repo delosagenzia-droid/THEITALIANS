@@ -1,6 +1,8 @@
 'use client';
 
 import { SectionNumber } from '../ui/SectionNumber';
+import { motion } from 'framer-motion';
+import { Heart, MessageCircle, Share2, Play } from 'lucide-react';
 
 export function Problem() {
     return (
@@ -114,103 +116,169 @@ export function Problem() {
                 </div>
 
                 {/* ================= RIGHT: VERTICAL VIDEO MOCKUP ================= */}
-                <div className="relative">
-                    {/* Hover glow */}
-                    <div className="absolute -inset-10 rounded-[48px] bg-[#F69E00]/10 blur-[90px] opacity-60" />
+                <div className="relative perspective-[2000px]">
+                    {/* Pulsing Hover glow */}
+                    <motion.div
+                        initial={{ opacity: 0.4, scale: 0.9 }}
+                        animate={{ opacity: [0.4, 0.7, 0.4], scale: [0.9, 1.05, 0.9] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute -inset-10 rounded-[48px] bg-[#F69E00]/15 blur-[100px]"
+                    />
 
-                    {/* Phone-like vertical frame */}
-                    <div className="relative mx-auto w-full max-w-[380px]">
-                        {/* Outer shell */}
-                        <div className="relative rounded-[44px] border border-black/10 bg-white shadow-[0_40px_120px_rgba(0,0,0,0.18)]">
-                            {/* Side buttons (subtle detail) */}
-                            <div className="absolute left-[-2px] top-28 h-10 w-[3px] rounded-full bg-black/10" />
-                            <div className="absolute left-[-2px] top-44 h-16 w-[3px] rounded-full bg-black/10" />
-                            <div className="absolute right-[-2px] top-36 h-20 w-[3px] rounded-full bg-black/10" />
+                    {/* Phone-like vertical frame with Floating Animation */}
+                    <motion.div
+                        initial={{ y: 0 }}
+                        animate={{ y: [-10, 10, -10] }}
+                        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                        className="relative mx-auto w-full max-w-[380px] preserve-3d"
+                    >
+                        {/* Floating Interaction Elements (Orbiting) */}
+                        <motion.div
+                            animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                            className="absolute -right-8 top-20 z-30 hidden lg:flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl border border-black/5"
+                        >
+                            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+                            <span className="text-xs font-bold text-black/80">4.2k</span>
+                        </motion.div>
 
-                            {/* Screen */}
-                            <div className="relative m-[10px] overflow-hidden rounded-[36px] bg-[#0B0B0B]">
-                                {/* 9:16 aspect ratio */}
-                                <div className="relative aspect-[9/16]">
-                                    {/* Gradient overlay for readability */}
-                                    <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/25 via-transparent to-black/55 pointer-events-none" />
+                        <motion.div
+                            animate={{ y: [-8, 8, -8], x: [-5, 5, -5] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                            className="absolute -left-6 bottom-32 z-30 hidden lg:flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl border border-black/5"
+                        >
+                            <MessageCircle className="w-4 h-4 text-blue-500" />
+                            <span className="text-xs font-bold text-black/80">342</span>
+                        </motion.div>
 
-                                    {/* Notch */}
-                                    <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 h-6 w-28 rounded-full bg-black/70 border border-white/10" />
+                        {/* Outer shell (Metal Frame Effect) */}
+                        <div className="relative rounded-[50px] p-[6px] bg-gradient-to-b from-[#e3e3e3] via-[#f5f5f5] to-[#d1d1d1] shadow-[0_40px_120px_rgba(0,0,0,0.2),0_10px_30px_rgba(0,0,0,0.1)]">
+                            {/* Inner Bezel */}
+                            <div className="relative rounded-[44px] bg-black border-[4px] border-black overflow-hidden ring-1 ring-white/20">
 
-                                    {/* VIDEO (placeholder) — sostituisci src con il tuo verticale */}
-                                    <video
-                                        autoPlay
-                                        loop
-                                        muted
-                                        playsInline
-                                        className="absolute inset-0 h-full w-full object-cover opacity-90"
-                                    >
-                                        {/* Placeholder: metti qui un vero reel verticale quando lo hai */}
-                                        <source
-                                            src="https://assets.mixkit.co/videos/preview/mixkit-woman-taking-a-video-of-a-street-45041-large.mp4"
-                                            type="video/mp4"
-                                        />
-                                    </video>
+                                {/* Side buttons (subtle) */}
+                                <div className="absolute left-[-8px] top-28 h-10 w-[4px] rounded-l-md bg-[#c0c0c0]" />
+                                <div className="absolute left-[-8px] top-44 h-16 w-[4px] rounded-l-md bg-[#c0c0c0]" />
+                                <div className="absolute right-[-8px] top-36 h-20 w-[4px] rounded-r-md bg-[#c0c0c0]" />
 
-                                    {/* HUD / labels */}
-                                    <div className="absolute inset-0 z-20 p-5 flex flex-col justify-between pointer-events-none">
-                                        <div className="flex items-start justify-between">
-                                            <div className="rounded-full bg-white/10 px-3 py-1.5 backdrop-blur-md border border-white/10">
-                                                <p className="font-body text-[10px] tracking-[0.24em] uppercase text-white/85 font-semibold">
-                                                    Reel · Vertical Story
-                                                </p>
-                                            </div>
+                                {/* Screen */}
+                                <div className="relative overflow-hidden rounded-[38px] bg-[#0B0B0B]">
+                                    {/* 9:16 aspect ratio */}
+                                    <div className="relative aspect-[9/16]">
+                                        {/* Gradient overlay for readability */}
+                                        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/40 via-transparent to-black/80 pointer-events-none" />
 
-                                            <div className="rounded-full bg-[#F69E00]/20 px-3 py-1.5 backdrop-blur-md border border-[#F69E00]/30">
-                                                <p className="font-body text-[10px] tracking-[0.24em] uppercase text-[#F69E00] font-semibold">
-                                                    #F69E00
-                                                </p>
+                                        {/* Notch */}
+                                        <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 h-7 w-32 bg-black rounded-b-[18px] flex justify-center items-center">
+                                            <div className="w-16 h-1 rounded-full bg-[#1a1a1a]" />
+                                        </div>
+
+                                        {/* VIDEO */}
+                                        <video
+                                            autoPlay
+                                            loop
+                                            muted
+                                            playsInline
+                                            className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
+                                        >
+                                            <source
+                                                src="https://lcsckuzjasqtxsgvnzse.supabase.co/storage/v1/object/public/brand/VIDEO_rick%20(1)%20(1).mp4"
+                                                type="video/mp4"
+                                            />
+                                        </video>
+
+                                        {/* Play Button Overlay (Dynamic) */}
+                                        <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                            <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                                                <Play className="w-6 h-6 text-white fill-white ml-1" />
                                             </div>
                                         </div>
 
-                                        <div className="flex items-end justify-between gap-4">
-                                            <div className="rounded-2xl bg-black/35 backdrop-blur-md px-4 py-3 border border-white/10">
-                                                <p className="font-heading text-white font-bold text-[18px] leading-none italic">
-                                                    The Italians
-                                                </p>
-                                                <p className="mt-1 font-body text-[10px] tracking-[0.22em] uppercase font-semibold text-[#F69E00]">
-                                                    Visual Legacy
-                                                </p>
+                                        {/* HUD / labels */}
+                                        <div className="absolute inset-0 z-20 p-6 flex flex-col justify-between pointer-events-none">
+                                            <div className="flex items-start justify-between mt-6">
+                                                <div className="rounded-full bg-black/30 px-3 py-1.5 backdrop-blur-lg border border-white/10 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                                                    <p className="font-body text-[10px] tracking-[0.1em] uppercase text-white font-medium">
+                                                        LIVE
+                                                    </p>
+                                                </div>
+
+                                                <div className="rounded-full bg-[#F69E00]/20 px-3 py-1.5 backdrop-blur-lg border border-[#F69E00]/30 shadow-[0_0_15px_rgba(246,158,0,0.3)]">
+                                                    <p className="font-body text-[10px] tracking-[0.1em] uppercase text-[#F69E00] font-bold">
+                                                        #ITALIANS
+                                                    </p>
+                                                </div>
                                             </div>
 
-                                            {/* Fake UI dots (style) */}
-                                            <div className="flex flex-col gap-2 opacity-90">
-                                                <div className="h-9 w-9 rounded-full bg-white/10 border border-white/10 backdrop-blur-md" />
-                                                <div className="h-9 w-9 rounded-full bg-white/10 border border-white/10 backdrop-blur-md" />
-                                                <div className="h-9 w-9 rounded-full bg-white/10 border border-white/10 backdrop-blur-md" />
+                                            <div className="flex items-end justify-between gap-4">
+                                                <div className="flex-1 space-y-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="h-8 w-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md p-0.5">
+                                                            <img src="/logo-email.png" alt="Logo" className="w-full h-full object-contain opacity-90" />
+                                                        </div>
+                                                        <span className="text-white font-heading font-semibold text-sm tracking-wide">The Italians</span>
+                                                    </div>
+                                                    <div className="rounded-2xl bg-black/40 backdrop-blur-md px-4 py-3 border border-white/10">
+                                                        <p className="font-heading text-white font-bold text-[22px] leading-none italic">
+                                                            Visual Legacy
+                                                        </p>
+                                                        <p className="mt-1 font-body text-[11px] text-white/70">
+                                                            Raccontare l'eccellenza attraverso le immagini.
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                {/* Action Bar */}
+                                                <div className="flex flex-col gap-4 pb-2">
+                                                    <div className="flex flex-col items-center gap-1">
+                                                        <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
+                                                            <Heart className="w-5 h-5 text-white" />
+                                                        </div>
+                                                        <span className="text-[10px] text-white font-medium">4.2k</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-1">
+                                                        <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
+                                                            <MessageCircle className="w-5 h-5 text-white" />
+                                                        </div>
+                                                        <span className="text-[10px] text-white font-medium">342</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-1">
+                                                        <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
+                                                            <Share2 className="w-5 h-5 text-white" />
+                                                        </div>
+                                                        <span className="text-[10px] text-white font-medium">Share</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Bottom caption under the phone (adds “premium pitch deck” feel) */}
-                            <div className="px-6 pb-6 pt-3">
-                                <div className="flex items-center gap-3">
-                                    <div className="h-px flex-1 bg-black/10" />
-                                    <span className="font-body text-[11px] tracking-[0.22em] uppercase text-[#7A7A7A]">
-                                        Placeholder · Vertical Video
-                                    </span>
-                                    <div className="h-px w-10 bg-black/10" />
-                                </div>
-                            </div>
                         </div>
-                    </div>
+
+                        {/* Bottom Reflection */}
+                        <div className="absolute -bottom-12 left-10 right-10 h-4 bg-black/20 blur-xl rounded-[100%]" />
+                    </motion.div>
 
                     {/* Micro badge (optional) */}
-                    <div className="mt-8 flex justify-center">
-                        <div className="inline-flex items-center gap-3 rounded-full border border-black/10 bg-white/70 px-5 py-2 backdrop-blur-md">
-                            <span className="h-2 w-2 rounded-full bg-[#F69E00]" />
-                            <span className="font-body text-[12px] tracking-widest uppercase text-[#5A5A5A]">
-                                Formato ottimizzato per TikTok / Reels / Shorts
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.5 }}
+                        className="mt-12 flex justify-center"
+                    >
+                        <div className="inline-flex items-center gap-3 rounded-full border border-black/5 bg-white/80 px-5 py-2 backdrop-blur-md shadow-sm">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#F69E00] opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#F69E00]"></span>
+                            </span>
+                            <span className="font-body text-[12px] tracking-widest uppercase text-[#5A5A5A] font-medium">
+                                Ottimizzato per Social Media
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
