@@ -34,14 +34,18 @@ export function Footer() {
                 {/* ================= TOP GRID ================= */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
                     {/* Brand */}
-                    <div className="md:col-span-4">
+                    <div className="md:col-span-5">
                         <div className="flex items-center gap-3">
                             <div className="h-2 w-2 rounded-full bg-[#F69E00]" />
                             <h3 className="font-heading text-2xl font-semibold text-white tracking-tight">THE ITALIANS</h3>
                         </div>
 
                         <p className="mt-4 font-body text-white/65 text-sm leading-relaxed max-w-sm">
-                            Raccontiamo le imprese italiane attraverso storytelling, produzione e distribuzione premium.
+                            THE ITALIANS è un format di video storytelling che racconta le imprese italiane
+                            attraverso interviste autentiche e produzione cinematografica. Un progetto editoriale
+                            di Riccardo Segna (content creator e interviewer) e Delos Lab (agenzia creativa Roma).
+                            Entriamo nelle fabbriche, nei laboratori e nelle cucine d&apos;Italia per mostrare
+                            l&apos;eccellenza del Made in Italy.
                         </p>
 
                         <p className="mt-7 font-body text-[11px] uppercase tracking-[0.28em] text-white/45">
@@ -90,8 +94,37 @@ export function Footer() {
                         </ul>
                     </div>
 
-                    {/* Company details */}
+                    {/* Navigation links */}
                     <div className="md:col-span-4">
+                        <h4 className="font-heading text-white text-sm font-semibold uppercase tracking-[0.28em] mb-5">
+                            Navigazione
+                        </h4>
+
+                        <ul className="space-y-3 text-sm">
+                            {[
+                                { href: '/chi-siamo', label: 'Chi Siamo' },
+                                { href: '/storie', label: 'Le Storie' },
+                                { href: '/candidati', label: 'Candidati' },
+                                { href: '/team', label: 'Team' },
+                            ].map((item) => (
+                                <li key={item.href}>
+                                    <Link
+                                        href={item.href}
+                                        className="group inline-flex items-center gap-3 font-body text-white/60 hover:text-white transition-colors"
+                                    >
+                                        <span className="h-px w-6 bg-white/15 group-hover:bg-[#F69E00]/60 transition-colors" />
+                                        <span className="relative">
+                                            {item.label}
+                                            <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#F69E00]/60 transition-all duration-500 group-hover:w-full" />
+                                        </span>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Company details */}
+                    <div className="md:col-span-3">
                         <h4 className="font-heading text-white text-sm font-semibold uppercase tracking-[0.28em] mb-5">
                             Dati societari
                         </h4>

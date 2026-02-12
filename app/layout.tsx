@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieBanner } from "@/components/legal/CookieBanner";
+import { StructuredData } from "@/components/StructuredData";
 
 // Configure Fonts
 const inter = Inter({
@@ -23,21 +24,25 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL("https://the-italians.it"),
   title: {
-    default: "THE ITALIANS | Raccontiamo le Imprese Italiane",
+    default: "THE ITALIANS — Raccontiamo le Imprese Italiane | Riccardo Segna × Delos Lab",
     template: "%s | THE ITALIANS",
   },
   description:
-    "Format video che entra nelle fabbriche, nei laboratori e nelle cucine italiane per raccontare le storie del Made in Italy.",
+    "THE ITALIANS è il format video che racconta le imprese italiane attraverso storytelling cinematografico. Un progetto di Riccardo Segna (Riccardo Segnalini) e Delos Lab. Entriamo nelle fabbriche, laboratori e cucine d'Italia per dare voce all'eccellenza del Made in Italy.",
   keywords: [
-    "imprese italiane", "storie aziende italiane", "Made in Italy",
-    "video imprese", "storytelling aziendale", "interviste imprenditori italiani",
-    "PMI italiane", "eccellenza italiana", "the italians",
+    "THE ITALIANS", "imprese italiane", "storytelling imprese",
+    "Riccardo Segna", "Riccardo Segnalini", "Delos Lab",
+    "video imprese italiane", "Made in Italy", "format video aziende",
+    "content creator imprese", "raccontare aziende italiane",
+    "storytelling aziendale", "video storytelling Italia",
+    "delos lab roma", "the italians riccardo segna",
   ],
   authors: [
     { name: "Riccardo Segna" },
     { name: "Delos Lab", url: "https://delos-lab.it" },
   ],
-  creator: "Riccardo Segna × Delos Lab",
+  creator: "Delos Lab",
+  publisher: "THE ITALIANS",
   robots: {
     index: true,
     follow: true,
@@ -52,22 +57,31 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://the-italians.it",
   },
-  // verification: { google: "CODICE_VERIFICA" }, // TODO: Add verification code when available
+  verification: {
+    google: "vm551VGqd1UtxPU_FYY4HblvJfipUsRUn_dEIWVY4F8",
+  },
   openGraph: {
     type: "website",
     locale: "it_IT",
     url: "https://the-italians.it",
     siteName: "THE ITALIANS",
-    title: "THE ITALIANS | Raccontiamo le Imprese Italiane",
-    description: "Format video cinematografico che racconta le storie delle imprese italiane.",
-    images: [{ url: "https://the-italians.it/og/home.jpg", width: 1200, height: 630, alt: "THE ITALIANS" }],
+    title: "THE ITALIANS — Raccontiamo le Imprese Italiane",
+    description: "Format video che racconta l'eccellenza delle imprese italiane. Un progetto di Riccardo Segna e Delos Lab.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "THE ITALIANS — Raccontiamo le Imprese Italiane",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "THE ITALIANS | Raccontiamo le Imprese Italiane",
-    description: "Format video che entra nelle fabbriche italiane per raccontare le storie del Made in Italy.",
-    images: ["https://the-italians.it/og/home.jpg"],
-    creator: "@riccardosegna", // Verify handle
+    title: "THE ITALIANS — Raccontiamo le Imprese Italiane",
+    description: "Format video che racconta l'eccellenza delle imprese italiane. Riccardo Segna × Delos Lab.",
+    images: ["/og-image.png"],
+    creator: "@riccardosegna",
   },
 };
 
@@ -79,27 +93,7 @@ export default function RootLayout({
   return (
     <html lang="it">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "THE ITALIANS",
-              "url": "https://the-italians.it",
-              "logo": "https://the-italians.it/logo.png",
-              "description": "Format video che racconta le imprese italiane attraverso interviste autentiche.",
-              "foundingDate": "2026",
-              "founder": [{ "@type": "Person", "name": "Riccardo Segna" }],
-              "sameAs": [
-                "https://instagram.com/theitalians",
-                "https://tiktok.com/@theitalians",
-                "https://instagram.com/riccardosegna",
-                "https://delos-lab.it"
-              ]
-            }),
-          }}
-        />
+        <StructuredData />
       </head>
       <body
         className={`${inter.variable} ${poppins.variable} antialiased font-body bg-bg text-text`}

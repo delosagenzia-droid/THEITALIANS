@@ -65,7 +65,7 @@ export function Team() {
                             <div className="relative aspect-[3/4]">
                                 <Image
                                     src="/riccardo-segna.jpg"
-                                    alt="Riccardo Segna"
+                                    alt="Riccardo Segna (Riccardo Segnalini) - Content Creator e Host di THE ITALIANS, storyteller imprese italiane"
                                     fill
                                     className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
                                     sizes="(max-width: 768px) 100vw, 400px"
@@ -101,9 +101,12 @@ export function Team() {
                         {/* Body */}
                         <div className="space-y-6">
                             <p className="font-body text-white/65 leading-relaxed font-light">
-                                Il volto del progetto e l’intervistatore. Racconta persone e imprese con uno stile diretto, umano e
-                                spontaneo. Le sue interviste sono autentiche, mai costruite, e mettono al centro le storie, i valori e le
-                                persone dietro le aziende.
+                                <strong className="text-white/85">Riccardo Segna</strong> (Riccardo Segnalini) è un content creator e
+                                storyteller italiano specializzato in street interview e racconto d&apos;impresa. Con oltre 155.000 follower
+                                su Instagram, 330.000 su TikTok e 30 milioni di visualizzazioni, racconta persone e
+                                professionisti con uno stile diretto, autentico e cinematografico. Come host e
+                                interviewer di THE ITALIANS, entra nelle aziende italiane per dare voce a chi le
+                                costruisce ogni giorno.
                             </p>
 
                             {/* Metrics */}
@@ -151,7 +154,7 @@ export function Team() {
                             <div className="relative aspect-[3/4]">
                                 <Image
                                     src="/delos-lab.png"
-                                    alt="Delos Lab"
+                                    alt="Delos Lab - Agenzia creativa Roma, partner di produzione THE ITALIANS, marketing e video"
                                     fill
                                     className="object-cover grayscale-[35%] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-[1.04]"
                                     sizes="(max-width: 768px) 100vw, 400px"
@@ -187,8 +190,11 @@ export function Team() {
                         {/* Body */}
                         <div className="space-y-6">
                             <p className="font-body text-white/65 leading-relaxed font-light">
-                                Il team creativo e produttivo che cura la regia, la produzione e la post-produzione. Trasforma le storie in
-                                contenuti coerenti, curati e strategici, mantenendo uno stile cinematografico e professionale.
+                                <strong className="text-white/85">Delos Lab</strong> è un&apos;agenzia di marketing, produzione video
+                                e consulenza con sede a Roma (Via Gaetano Donizetti 7/b, 00198). Fondata da Edoardo
+                                De Juliis e Marco Losso, il team ha generato oltre 4 miliardi di visualizzazioni e
+                                seguito più di 5 milioni di follower per i propri clienti. In THE ITALIANS, Delos Lab
+                                cura direzione creativa, produzione e post-produzione di ogni episodio.
                             </p>
 
                             {/* Metrics */}

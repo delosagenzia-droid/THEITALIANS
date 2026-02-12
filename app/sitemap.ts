@@ -15,6 +15,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 1.0,
         },
         {
+            url: "https://the-italians.it/chi-siamo",
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.8,
+        },
+        {
+            url: "https://the-italians.it/storie",
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.9,
+        },
+        {
+            url: "https://the-italians.it/candidati",
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.7,
+        },
+        {
             url: "https://the-italians.it/team",
             changeFrequency: "monthly",
             priority: 0.7,
@@ -37,8 +55,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ...(episodes || []).map((ep) => ({
             url: `https://the-italians.it/storie/${ep.id}`,
             lastModified: new Date(ep.publish_date),
-            changeFrequency: "monthly" as const, // explicit cast for TS
+            changeFrequency: "monthly" as const,
             priority: 0.8,
         })),
     ];
 }
+

@@ -35,9 +35,9 @@ export function Navbar() {
                 {/* ================= NAV LINKS ================= */}
                 <div className="hidden md:flex items-center gap-12">
                     {[
-                        { name: 'Format', href: '#format' },
-                        { name: 'Storie', href: '#storie' },
-                        { name: 'Team', href: '#team' },
+                        { name: 'Chi Siamo', href: '/chi-siamo' },
+                        { name: 'Storie', href: '/storie' },
+                        { name: 'Candidati', href: '/candidati' },
                     ].map((item) => (
                         <Link
                             key={item.name}

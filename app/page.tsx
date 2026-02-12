@@ -21,10 +21,10 @@ const ApplicationForm = dynamic(() => import('@/components/home/ApplicationForm'
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "THE ITALIANS | Raccontiamo le Imprese Italiane",
-  description: "Format video che entra nelle fabbriche, laboratori e cucine italiane per raccontare le storie del Made in Italy.",
+  title: "THE ITALIANS — Raccontiamo le Imprese Italiane | Riccardo Segna × Delos Lab",
+  description: "THE ITALIANS è il format video che racconta le imprese italiane con storytelling cinematografico. Interviste autentiche nelle fabbriche, laboratori e cucine d'Italia. Un progetto di Riccardo Segna (Riccardo Segnalini) e Delos Lab.",
   openGraph: {
-    images: [{ url: "https://the-italians.it/og/home.jpg", width: 1200, height: 630, alt: "THE ITALIANS Homepage" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "THE ITALIANS — Raccontiamo le Imprese Italiane" }],
   },
 };
 
