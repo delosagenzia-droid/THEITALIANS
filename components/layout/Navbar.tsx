@@ -35,6 +35,7 @@ export function Navbar() {
                 {/* ================= NAV LINKS ================= */}
                 <div className="hidden md:flex items-center gap-12">
                     {[
+                        { name: 'Home', href: '/' },
                         { name: 'Chi Siamo', href: '/chi-siamo' },
                         { name: 'Storie', href: '/storie' },
                         { name: 'Candidati', href: '/candidati' },

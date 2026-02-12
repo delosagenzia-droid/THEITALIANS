@@ -137,22 +137,6 @@ export function Hero() {
             {/* ===================== CONTENT ===================== */}
 
             <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 lg:px-20">
-                {/* Section indicator (8px spacing logic: label -> heading) */}
-                <div
-                    className={[
-                        'flex items-center gap-4 mb-8',
-                        'transition-all duration-1000 ease-out',
-                        isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4',
-                    ].join(' ')}
-                >
-                    <span className="font-body font-medium text-[12px] tracking-widest text-[#F69E00] uppercase">
-                        01
-                    </span>
-                    <div className="w-12 h-px bg-gradient-to-r from-[#F69E00]/70 to-transparent" />
-                    <span className="font-body font-medium text-[12px] tracking-widest text-white/45 uppercase hidden sm:inline">
-                        The Italians
-                    </span>
-                </div>
 
                 {/* Title */}
                 <h1
@@ -164,9 +148,9 @@ export function Hero() {
                         isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
                     ].join(' ')}
                 >
-                    <span className="text-white">Raccontiamo le</span>
+                    <span className="text-white">Tutti parlano di eccellenza italiana.</span>
                     <br />
-                    <span className="text-[#F69E00]">Imprese Italiane</span>
+                    <span className="text-[#F69E00]">Noi la mostriamo</span>
                 </h1>
 
                 {/* Description */}
@@ -179,9 +163,10 @@ export function Hero() {
                         isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
                     ].join(' ')}
                 >
-                    Entriamo nelle fabbriche, nei laboratori, nelle cucine.
+                    THE ITALIANS ha l&apos;obiettivo di raccontare la tua azienda tramite interviste
+                    autentiche e distribuirle sui nostri canali social.
                     <br className="hidden md:block" />
-                    Ascoltiamo le voci di chi lavora ogni giorno dietro l&apos;eccellenza italiana.
+                    Zero costi per l&apos;azienda. Ci pensiamo noi!
                 </p>
 
                 {/* Collaboration credit */}
