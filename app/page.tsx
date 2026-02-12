@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { ComeFacciamo } from "@/components/home/ComeFacciamo";
 import { Format } from "@/components/home/Format";
 import { DividerLine } from "@/components/ui/DividerLine";
 import { Metadata } from "next";
@@ -59,6 +60,7 @@ export default function Home() {
         }}
       />
       <Hero />
+      <ComeFacciamo />
       <Problem />
       <DividerLine />
       <Format />

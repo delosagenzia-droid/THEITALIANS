@@ -39,7 +39,7 @@ export function Team() {
                 {/* ================= HEADER ================= */}
                 <div className="mb-16 md:mb-24 flex flex-col gap-10 md:flex-row md:items-end md:justify-between">
                     <div className="max-w-2xl">
-                        <SectionNumber number="04" className="mb-6" />
+                        <SectionNumber number="03" className="mb-6" />
                         <h2 className="font-heading font-bold text-[clamp(2.3rem,4.6vw,4.4rem)] leading-[0.95] tracking-tight text-white">
                             Chi <span className="italic font-light text-[#F69E00]">Siamo.</span>
                         </h2>

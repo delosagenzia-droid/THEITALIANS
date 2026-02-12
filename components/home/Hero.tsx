@@ -166,7 +166,7 @@ export function Hero() {
                 >
                     <span className="text-white">Raccontiamo le</span>
                     <br />
-                    <span className="italic text-[#F69E00]">Imprese Italiane</span>
+                    <span className="text-[#F69E00]">Imprese Italiane</span>
                 </h1>
 
                 {/* Description */}

@@ -60,7 +60,7 @@ export function ApplicationForm() {
             <div className="relative z-10 mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-2 lg:gap-24">
                 {/* ================= LEFT: COPY ================= */}
                 <div>
-                    <SectionNumber number="05" />
+                    <SectionNumber number="04" />
 
                     <h2 className="mt-6 font-heading font-bold text-[clamp(2.2rem,3.6vw,3.2rem)] leading-[1.05] tracking-tight text-white">
                         Raccontiamo la vostra storia?
