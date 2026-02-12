@@ -58,10 +58,10 @@ export function Footer() {
                         <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.02] px-4 py-2">
                             <span className="h-2 w-2 rounded-full bg-[#F69E00]" />
                             <a
-                                href="mailto:info@theitalians.it"
+                                href="mailto:info@the-italians.it"
                                 className="font-body text-[11px] uppercase tracking-[0.24em] text-white/70 hover:text-white transition-colors"
                             >
-                                info@theitalians.it
+                                info@the-italians.it
                             </a>
                         </div>
                     </div>
@@ -105,6 +105,7 @@ export function Footer() {
                                 { href: '/chi-siamo', label: 'Chi Siamo' },
                                 { href: '/storie', label: 'Le Storie' },
                                 { href: '/candidati', label: 'Candidati' },
+                                { href: '/contatti', label: 'Contatti' },
                                 { href: '/team', label: 'Team' },
                             ].map((item) => (
                                 <li key={item.href}>
@@ -169,10 +170,10 @@ export function Footer() {
                     <div className="font-body text-[12px] text-white/55 leading-relaxed">
                         Per richieste, collaborazioni o candidature:{' '}
                         <a
-                            href="mailto:info@theitalians.it"
+                            href="mailto:info@the-italians.it"
                             className="text-white/70 hover:text-white transition-colors"
                         >
-                            info@theitalians.it
+                            info@the-italians.it
                         </a>
                     </div>
                 </div>

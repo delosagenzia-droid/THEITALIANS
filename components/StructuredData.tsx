@@ -50,7 +50,7 @@ export function StructuredData() {
         ],
         contactPoint: {
             "@type": "ContactPoint",
-            email: "info@theitalians.it",
+            email: "info@the-italians.it",
             contactType: "customer service",
             availableLanguage: "Italian",
         },

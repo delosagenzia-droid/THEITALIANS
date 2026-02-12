@@ -156,17 +156,18 @@ export function Hero() {
                 {/* Description */}
                 <p
                     className={[
-                        'font-body font-light text-white/70',
+                        'font-body font-normal text-white/90',
                         'text-base md:text-lg leading-relaxed',
-                        'max-w-xl mb-6', // 24px before CTA block
+                        'max-w-xl mb-6',
                         'transition-all duration-1000 delay-300 ease-out',
                         isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
                     ].join(' ')}
                 >
                     THE ITALIANS ha l&apos;obiettivo di raccontare la tua azienda tramite interviste
-                    autentiche e distribuirle sui nostri canali social.
+                    autentiche e distribuirle sui nostri canali social:
                     <br className="hidden md:block" />
-                    Zero costi per l&apos;azienda. Ci pensiamo noi!
+                    <span className="text-white">è un progetto editoriale,</span>{' '}
+                    <span className="font-extrabold text-white uppercase tracking-wide">NON HA NESSUN COSTO!</span>
                 </p>
 
                 {/* Collaboration credit */}
@@ -204,13 +205,13 @@ export function Hero() {
                     </Link>
 
                     {/* Secondary: outline with accent, keeps premium look */}
-                    <Link href="#storie" className="w-full sm:w-auto">
+                    <Link href="/contatti" className="w-full sm:w-auto">
                         <Button
                             variant="outline"
                             size="lg"
                             className="w-full sm:w-auto rounded-[8px] border border-white/20 bg-transparent px-8 py-4 text-[15px] tracking-wide text-white font-body font-bold uppercase hover:bg-white/5 hover:border-white/40 hover:-translate-y-1 transition-all duration-300 backdrop-blur-sm"
                         >
-                            Guarda le Storie
+                            Contattaci
                         </Button>
                     </Link>
                 </div>
