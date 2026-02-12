@@ -191,7 +191,7 @@ export function Team() {
                         <div className="space-y-6">
                             <p className="font-body text-white/65 leading-relaxed font-light">
                                 <strong className="text-white/85">Delos Lab</strong> è un&apos;agenzia di marketing, produzione video
-                                e consulenza con sede a Roma (Via Gaetano Donizetti 7/b, 00198). Fondata da Edoardo
+                                e consulenza con sede a Roma. Fondata da Edoardo
                                 De Juliis e Marco Losso, il team ha generato oltre 4 miliardi di visualizzazioni e
                                 seguito più di 5 milioni di follower per i propri clienti. In THE ITALIANS, Delos Lab
                                 cura direzione creativa, produzione e post-produzione di ogni episodio.

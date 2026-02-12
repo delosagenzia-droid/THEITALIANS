@@ -126,8 +126,7 @@ export default function ChiSiamoPage() {
                     <div className="space-y-6 md:order-1">
                         <p className="font-body text-white/75 leading-relaxed text-[17px]">
                             <strong className="text-white">Delos Lab</strong> è un&apos;agenzia di marketing, produzione video
-                            e consulenza con sede a <strong className="text-white">Roma</strong> (Via Gaetano Donizetti 7/b,
-                            00198).
+                            e consulenza con sede a <strong className="text-white">Roma</strong>.
                         </p>
                         <p className="font-body text-white/65 leading-relaxed">
                             Fondata da Edoardo De Juliis e Marco Losso, il team ha generato oltre{' '}
