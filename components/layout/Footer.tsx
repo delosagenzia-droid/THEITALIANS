@@ -67,7 +67,7 @@ export function Footer() {
                     </div>
 
                     {/* Legal links */}
-                    <div className="md:col-span-4">
+                    <div className="md:col-span-2">
                         <h4 className="font-heading text-white text-sm font-semibold uppercase tracking-[0.28em] mb-5">
                             Legal
                         </h4>
@@ -95,7 +95,7 @@ export function Footer() {
                     </div>
 
                     {/* Navigation links */}
-                    <div className="md:col-span-4">
+                    <div className="md:col-span-2">
                         <h4 className="font-heading text-white text-sm font-semibold uppercase tracking-[0.28em] mb-5">
                             Navigazione
                         </h4>
@@ -153,8 +153,7 @@ export function Footer() {
 
                                 <div className="text-white font-medium mb-2">Riccardo Segna</div>
                                 <div className="font-body text-white/60">
-                                    Dati fiscali e sede legale:{' '}
-                                    <span className="text-white/70">inserire</span>
+                                    Libero professionista a partita IVA
                                 </div>
                             </div>
                         </div>

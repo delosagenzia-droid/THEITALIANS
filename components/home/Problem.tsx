@@ -211,7 +211,6 @@ export function Problem() {
                                                     muted
                                                     playsInline
                                                     preload="metadata"
-                                                    poster="/poster-placeholder.png"
                                                     className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
                                                 >
                                                     <source
