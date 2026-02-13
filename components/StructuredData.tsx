@@ -77,7 +77,8 @@ export function StructuredData() {
         description:
             "Serie video che racconta le imprese italiane attraverso interviste autentiche, riprese cinematografiche e storytelling. Ogni episodio entra in un'azienda italiana per raccontarne storia, persone e processi.",
         thumbnailUrl: "https://the-italians.it/og-image.png",
-        uploadDate: "2026-01-01",
+        contentUrl: "https://www.youtube.com/@theitalians",
+        uploadDate: "2026-01-01T00:00:00+01:00",
         publisher: {
             "@type": "Organization",
             name: "THE ITALIANS",
