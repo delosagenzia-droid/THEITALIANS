@@ -149,6 +149,7 @@ export function Problem() {
                             animate={{ opacity: [0.4, 0.7, 0.4], scale: [0.9, 1.05, 0.9] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                             className="absolute -inset-10 rounded-[48px] bg-[#F69E00]/15 blur-[100px]"
+                            style={{ willChange: 'opacity, transform' }}
                         />
                     )}
 
@@ -158,28 +159,34 @@ export function Problem() {
                         <motion.div
                             className="relative w-full h-full"
                             initial={{ y: 0 }}
-                            animate={!isMobile ? { y: [-10, 10, -10] } : undefined}
-                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                            style={{ willChange: !isMobile ? 'transform' : undefined }}
+                            animate={!isMobile ? { y: [-10, 10, -10] } : { y: 0 }}
+                            transition={!isMobile ? { duration: 6, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }}
+                            style={{ willChange: !isMobile ? 'transform' : 'auto' }}
                         >
-                            {/* Floating Interaction Elements (Orbiting) */}
-                            <motion.div
-                                animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                className="absolute -right-8 top-20 z-30 hidden lg:flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl border border-black/5"
-                            >
-                                <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-                                <span className="text-xs font-bold text-black/80">4.2k</span>
-                            </motion.div>
+                            {/* Floating Interaction Elements (Orbiting) — desktop only */}
+                            {!isMobile && (
+                                <>
+                                    <motion.div
+                                        animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
+                                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                                        className="absolute -right-8 top-20 z-30 hidden lg:flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl border border-black/5"
+                                        style={{ willChange: 'transform' }}
+                                    >
+                                        <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+                                        <span className="text-xs font-bold text-black/80">4.2k</span>
+                                    </motion.div>
 
-                            <motion.div
-                                animate={{ y: [-8, 8, -8], x: [-5, 5, -5] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                                className="absolute -left-6 bottom-32 z-30 hidden lg:flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl border border-black/5"
-                            >
-                                <MessageCircle className="w-4 h-4 text-blue-500" />
-                                <span className="text-xs font-bold text-black/80">342</span>
-                            </motion.div>
+                                    <motion.div
+                                        animate={{ y: [-8, 8, -8], x: [-5, 5, -5] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                                        className="absolute -left-6 bottom-32 z-30 hidden lg:flex items-center gap-2 rounded-full bg-white/90 backdrop-blur-md px-4 py-2 shadow-xl border border-black/5"
+                                        style={{ willChange: 'transform' }}
+                                    >
+                                        <MessageCircle className="w-4 h-4 text-blue-500" />
+                                        <span className="text-xs font-bold text-black/80">342</span>
+                                    </motion.div>
+                                </>
+                            )}
 
                             {/* Outer shell (Metal Frame Effect) */}
                             <div className="relative rounded-[50px] p-[6px] bg-gradient-to-b from-[#e3e3e3] via-[#f5f5f5] to-[#d1d1d1] shadow-[0_40px_120px_rgba(0,0,0,0.2),0_10px_30px_rgba(0,0,0,0.1)]">
@@ -210,7 +217,7 @@ export function Problem() {
                                                     loop
                                                     muted
                                                     playsInline
-                                                    preload="metadata"
+                                                    preload="none"
                                                     className="absolute inset-0 h-full w-full object-cover scale-[1.02]"
                                                 >
                                                     <source
@@ -222,7 +229,7 @@ export function Problem() {
 
                                             {/* Play Button Overlay (Dynamic) */}
                                             <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                                                <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
+                                                <div className="w-16 h-16 rounded-full bg-black/30 md:backdrop-blur-md flex items-center justify-center border border-white/20">
                                                     <Play className="w-6 h-6 text-white fill-white ml-1" />
                                                 </div>
                                             </div>
@@ -230,14 +237,14 @@ export function Problem() {
                                             {/* HUD / labels */}
                                             <div className="absolute inset-0 z-20 p-6 flex flex-col justify-between pointer-events-none">
                                                 <div className="flex items-start justify-between mt-6">
-                                                    <div className="rounded-full bg-black/30 px-3 py-1.5 backdrop-blur-lg border border-white/10 flex items-center gap-2">
+                                                    <div className="rounded-full bg-black/50 md:bg-black/30 px-3 py-1.5 md:backdrop-blur-lg border border-white/10 flex items-center gap-2">
                                                         <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                                                         <p className="font-body text-[10px] tracking-[0.1em] uppercase text-white font-medium">
                                                             LIVE
                                                         </p>
                                                     </div>
 
-                                                    <div className="rounded-full bg-[#F69E00]/20 px-3 py-1.5 backdrop-blur-lg border border-[#F69E00]/30 shadow-[0_0_15px_rgba(246,158,0,0.3)]">
+                                                    <div className="rounded-full bg-[#F69E00]/30 md:bg-[#F69E00]/20 px-3 py-1.5 md:backdrop-blur-lg border border-[#F69E00]/30 shadow-[0_0_15px_rgba(246,158,0,0.3)]">
                                                         <p className="font-body text-[10px] tracking-[0.1em] uppercase text-[#F69E00] font-bold">
                                                             #ITALIANS
                                                         </p>
@@ -247,12 +254,12 @@ export function Problem() {
                                                 <div className="flex items-end justify-between gap-4">
                                                     <div className="flex-1 space-y-2">
                                                         <div className="flex items-center gap-2">
-                                                            <div className="h-8 w-8 rounded-full border border-white/20 bg-white/10 backdrop-blur-md p-0.5">
+                                                            <div className="h-8 w-8 rounded-full border border-white/20 bg-white/10 md:backdrop-blur-md p-0.5">
                                                                 <img src="/logo-email.png" alt="Logo" className="w-full h-full object-contain opacity-90" />
                                                             </div>
                                                             <span className="text-white font-heading font-semibold text-sm tracking-wide">The Italians</span>
                                                         </div>
-                                                        <div className="rounded-2xl bg-black/40 backdrop-blur-md px-4 py-3 border border-white/10">
+                                                        <div className="rounded-2xl bg-black/60 md:bg-black/40 px-4 py-3 md:backdrop-blur-md border border-white/10">
                                                             <p className="font-heading text-white font-bold text-[22px] leading-none italic">
                                                                 Visual Legacy
                                                             </p>
@@ -265,19 +272,19 @@ export function Problem() {
                                                     {/* Action Bar */}
                                                     <div className="flex flex-col gap-4 pb-2">
                                                         <div className="flex flex-col items-center gap-1">
-                                                            <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
+                                                            <div className="h-10 w-10 rounded-full bg-black/50 md:bg-black/30 md:backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
                                                                 <Heart className="w-5 h-5 text-white" />
                                                             </div>
                                                             <span className="text-[10px] text-white font-medium">4.2k</span>
                                                         </div>
                                                         <div className="flex flex-col items-center gap-1">
-                                                            <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
+                                                            <div className="h-10 w-10 rounded-full bg-black/50 md:bg-black/30 md:backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
                                                                 <MessageCircle className="w-5 h-5 text-white" />
                                                             </div>
                                                             <span className="text-[10px] text-white font-medium">342</span>
                                                         </div>
                                                         <div className="flex flex-col items-center gap-1">
-                                                            <div className="h-10 w-10 rounded-full bg-black/30 backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
+                                                            <div className="h-10 w-10 rounded-full bg-black/50 md:bg-black/30 md:backdrop-blur-lg border border-white/10 flex items-center justify-center transition-transform hover:scale-110">
                                                                 <Share2 className="w-5 h-5 text-white" />
                                                             </div>
                                                             <span className="text-[10px] text-white font-medium">Share</span>
