@@ -114,7 +114,13 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
     const [filterStatus, setFilterStatus] = useState('Tutti')
     const [filterLista, setFilterLista] = useState('Tutti')
     const [filterPriority, setFilterPriority] = useState('Tutte')
+    const [filterSector, setFilterSector] = useState('Tutti')
     const [sortBy, setSortBy] = useState<'priority' | 'name' | 'status'>('priority')
+
+    const uniqueSectors = useMemo(() => {
+        const sectors = contacts.map(c => c.sector || c.category).filter(Boolean) as string[]
+        return [...new Set(sectors)].sort()
+    }, [contacts])
 
     const [newContact, setNewContact] = useState<Partial<OutreachContact>>({
         status: 'Da Contattare', priority: 'Media', lista: 'B2B',
@@ -140,7 +146,8 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                 const mSt = filterStatus === 'Tutti' || c.status === filterStatus
                 const mL = filterLista === 'Tutti' || c.lista === filterLista
                 const mP = filterPriority === 'Tutte' || c.priority === filterPriority
-                return ms && mSt && mL && mP
+                const mSec = filterSector === 'Tutti' || c.sector === filterSector || c.category === filterSector
+                return ms && mSt && mL && mP && mSec
             })
             .sort((a, b) => {
                 if (sortBy === 'priority') return (PRIORITY_ORDER[a.priority] || 1) - (PRIORITY_ORDER[b.priority] || 1)
@@ -148,7 +155,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                 if (sortBy === 'status') return a.status.localeCompare(b.status)
                 return 0
             })
-    }, [contacts, search, filterStatus, filterLista, filterPriority, sortBy])
+    }, [contacts, search, filterStatus, filterLista, filterPriority, filterSector, sortBy])
 
     const todayTasks = tasks.filter(t => t.due_date === today)
     const overdueTasks = tasks.filter(t => t.due_date < today && !t.completed)
@@ -350,6 +357,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                             {[
                                 { val: filterStatus, set: setFilterStatus, opts: ['Tutti', ...Object.keys(STATUS_CFG)] },
                                 { val: filterLista, set: setFilterLista, opts: ['Tutti', 'B2B', 'Italiane', 'Roma'] },
+                                { val: filterSector, set: setFilterSector, opts: ['Tutti', ...uniqueSectors] },
                                 { val: filterPriority, set: setFilterPriority, opts: ['Tutte', 'Alta', 'Media', 'Bassa'] },
                             ].map((f, i) => (
                                 <select key={i} value={f.val} onChange={e => f.set(e.target.value)}
