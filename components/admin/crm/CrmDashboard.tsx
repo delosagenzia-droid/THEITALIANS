@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition, useMemo } from 'react'
+import Link from 'next/link'
 import type { OutreachContact, OutreachTask, ContactStatus, TaskType } from '@/app/admin/crm/actions'
 import {
     updateContactStatus,
@@ -211,9 +212,17 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
 
             {/* HEADER */}
             <header className="flex items-center justify-between px-8 py-4" style={{ borderBottom: '1px solid #222' }}>
-                <div className="flex items-baseline gap-3">
-                    <span className="text-xl font-bold tracking-widest">THE ITALIANS</span>
-                    <span className="text-xs font-bold tracking-[0.2em]" style={{ color: GOLD }}>CRM</span>
+                <div className="flex items-center gap-4">
+                    <Link href="/admin/dashboard"
+                        className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors hover:bg-white/5"
+                        style={{ color: '#666', textDecoration: 'none' }}>
+                        ← Dashboard
+                    </Link>
+                    <div className="w-px h-5" style={{ background: '#2A2A2A' }} />
+                    <div className="flex items-baseline gap-3">
+                        <span className="text-xl font-bold tracking-widest">THE ITALIANS</span>
+                        <span className="text-xs font-bold tracking-[0.2em]" style={{ color: GOLD }}>CRM</span>
+                    </div>
                 </div>
                 <div className="flex gap-2">
                     {overdueTasks.length > 0 && (
