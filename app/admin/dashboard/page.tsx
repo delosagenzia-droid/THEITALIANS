@@ -50,9 +50,14 @@ export default async function AdminDashboard({
                         <p className="text-text-subtle text-xs uppercase tracking-widest mb-1 font-body font-medium">Admin Panel</p>
                         <h1 className="text-3xl font-heading font-bold text-white">Candidature</h1>
                     </div>
-                    <form action="/auth/signout" method="post">
-                        <Button size="sm" variant="outline">Logout</Button>
-                    </form>
+                    <div className="flex gap-3 items-center">
+                        <Link href="/admin/crm">
+                            <Button size="sm" variant="outline">CRM Outreach</Button>
+                        </Link>
+                        <form action="/auth/signout" method="post">
+                            <Button size="sm" variant="outline">Logout</Button>
+                        </form>
+                    </div>
                 </div>
 
                 {/* TABS OF FILTERS */}
