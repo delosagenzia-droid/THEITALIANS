@@ -26,6 +26,14 @@ const STATUS_CFG: Record<ContactStatus, { color: string; bg: string; dot: string
 
 const PRIORITY_ORDER: Record<string, number> = { Alta: 0, Media: 1, Bassa: 2 }
 
+const SECTOR_OPTIONS = [
+    'Ristorazione', 'Artigianato', 'Moda', 'Boutique', 'Gioielleria',
+    'Food & Beverage', 'Hospitality', 'Design', 'Pelletteria',
+    'Manifattura', 'Tech', 'Automazione', 'Agricoltura',
+    'Cosmetica', 'Automotive', 'Edilizia', 'Energia',
+    'Logistica', 'Servizi', 'Altro',
+]
+
 // ─── SMALL COMPONENTS ────────────────────────────────────────────────────────
 
 function StatusBadge({ status }: { status: ContactStatus }) {
@@ -534,10 +542,10 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                     <div className="grid grid-cols-2 gap-3">
                         {[
                             ['Nome Azienda *', 'company_name', 'text'],
-                            ['Settore', 'sector', 'text'],
                             ['Email', 'contact_email', 'email'],
                             ['Referente', 'contact_name', 'text'],
                             ['Città', 'city', 'text'],
+                            ['Telefono', 'phone', 'text'],
                             ['LinkedIn', 'linkedin', 'url'],
                         ].map(([lbl, key, type]) => (
                             <Field key={key} label={lbl as string}>
@@ -547,8 +555,9 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                             </Field>
                         ))}
                     </div>
-                    <div className="grid grid-cols-3 gap-3 mt-1">
+                    <div className="grid grid-cols-2 gap-3 mt-1">
                         {[
+                            { lbl: 'Settore', key: 'sector', opts: SECTOR_OPTIONS },
                             { lbl: 'Lista', key: 'lista', opts: ['B2B', 'Italiane', 'Roma'] },
                             { lbl: 'Status', key: 'status', opts: Object.keys(STATUS_CFG) },
                             { lbl: 'Priorità', key: 'priority', opts: ['Alta', 'Media', 'Bassa'] },
@@ -557,6 +566,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                                 <select className={inputCls + ' cursor-pointer'} style={inputStyle}
                                     value={(newContact as any)[key] || ''}
                                     onChange={e => setNewContact(p => ({ ...p, [key]: e.target.value }))}>
+                                    <option value="">— Seleziona —</option>
                                     {opts.map(o => <option key={o}>{o}</option>)}
                                 </select>
                             </Field>
