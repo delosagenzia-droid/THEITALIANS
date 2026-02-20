@@ -117,30 +117,66 @@ export async function deleteTask(id: string) {
     revalidatePath('/admin/crm')
 }
 
-// ─── STATS ───────────────────────────────────────────────────────────────────
-
 export async function getCrmStats() {
     const supabase = await createClient()
     const today = new Date().toISOString().split('T')[0]
 
-    const [{ data: contacts }, { data: tasks }] = await Promise.all([
-        supabase.from('outreach_contacts').select('status, priority, lista'),
-        supabase.from('outreach_tasks').select('due_date, completed'),
+    // Calculate date boundaries
+    const now = new Date()
+    const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7)
+    const monthAgo = new Date(now); monthAgo.setDate(monthAgo.getDate() - 30)
+    const weekAgoStr = weekAgo.toISOString()
+    const monthAgoStr = monthAgo.toISOString()
+
+    const [{ data: contacts }, { data: tasks }, { data: recentlyUpdated }] = await Promise.all([
+        supabase.from('outreach_contacts').select('status, priority, lista, last_contact'),
+        supabase.from('outreach_tasks').select('due_date, completed, created_at'),
+        supabase.from('outreach_contacts')
+            .select('id, company_name, status, updated_at, last_contact')
+            .gte('updated_at', weekAgoStr)
+            .order('updated_at', { ascending: false })
+            .limit(20),
     ])
 
     const cs = contacts || []
+    const ts = ts_data(tasks || [], today)
+    const lavorati = cs.filter(c => c.status !== 'Da Contattare').length
+    const confermati = cs.filter(c => c.status === 'Confermato').length
+    const declinati = cs.filter(c => c.status === 'Declinato').length
+    const inPipeline = lavorati - declinati // Contattati + In Trattativa + Confermati
+
     return {
         total: cs.length,
         daContattare: cs.filter(c => c.status === 'Da Contattare').length,
         contattati: cs.filter(c => c.status === 'Contattato').length,
         inTrattativa: cs.filter(c => c.status === 'In Trattativa').length,
-        confermati: cs.filter(c => c.status === 'Confermato').length,
-        declinati: cs.filter(c => c.status === 'Declinato').length,
+        confermati,
+        declinati,
         listB2B: cs.filter(c => c.lista === 'B2B').length,
         listItaliane: cs.filter(c => c.lista === 'Italiane').length,
         listRoma: cs.filter(c => c.lista === 'Roma').length,
         altaPriorita: cs.filter(c => c.priority === 'Alta').length,
-        taskOggi: (tasks || []).filter(t => t.due_date === today).length,
-        taskScaduti: (tasks || []).filter(t => t.due_date < today && !t.completed).length,
+        taskOggi: ts.oggi,
+        taskScaduti: ts.scaduti,
+        taskCompletati: ts.completati,
+        taskTotali: ts.totali,
+        // ── Conversion metrics ──
+        lavorati,                                               // tutti quelli non "Da Contattare"
+        tassoRisposta: lavorati > 0 ? Math.round((inPipeline / lavorati) * 100) : 0,   // % risposte positive (no declinati)
+        tassoConversione: lavorati > 0 ? Math.round((confermati / lavorati) * 100) : 0,    // % confermati su lavorati
+        tassoChiusura: cs.length > 0 ? Math.round((confermati / cs.length) * 100) : 0,  // % confermati su totale
+        // ── Activity ──
+        aggiornamentiSettimana: (recentlyUpdated || []).length,
+        ultimiLavorati: (recentlyUpdated || []).slice(0, 8),
     }
 }
+
+function ts_data(tasks: { due_date: string; completed: boolean; created_at: string }[], today: string) {
+    return {
+        oggi: tasks.filter(t => t.due_date === today).length,
+        scaduti: tasks.filter(t => t.due_date < today && !t.completed).length,
+        completati: tasks.filter(t => t.completed).length,
+        totali: tasks.length,
+    }
+}
+

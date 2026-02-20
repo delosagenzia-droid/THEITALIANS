@@ -275,6 +275,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                 {/* ── OVERVIEW ──────────────────────────────────────────────────── */}
                 {tab === 'overview' && (
                     <div className="space-y-6">
+                        {/* KPI Status Row */}
                         <div className="grid grid-cols-6 gap-3">
                             <Stat val={stats.total} label="Totale" />
                             <Stat val={stats.daContattare} label="Da Contattare" color="#666" />
@@ -284,6 +285,33 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                             <Stat val={stats.declinati} label="Declinati" color="#EF4444" />
                         </div>
 
+                        {/* Conversion Rate KPIs */}
+                        <div className="grid grid-cols-4 gap-3">
+                            <div className="rounded-xl p-5" style={{ background: '#0A1A0A', border: '1px solid #22C55E22' }}>
+                                <div className="text-3xl font-bold" style={{ color: '#22C55E' }}>{stats.tassoConversione}%</div>
+                                <div className="text-xs text-neutral-500 mt-1 font-medium">Tasso Conversione</div>
+                                <div className="text-[10px] text-neutral-600 mt-0.5">{stats.confermati} confermati / {stats.lavorati} lavorati</div>
+                            </div>
+                            <div className="rounded-xl p-5" style={{ background: '#001020', border: '1px solid #3B9EFF22' }}>
+                                <div className="text-3xl font-bold" style={{ color: '#3B9EFF' }}>{stats.tassoRisposta}%</div>
+                                <div className="text-xs text-neutral-500 mt-1 font-medium">Tasso Risposta</div>
+                                <div className="text-[10px] text-neutral-600 mt-0.5">Risposte positive (no declinati)</div>
+                            </div>
+                            <div className="rounded-xl p-5" style={{ background: '#1A1000', border: '1px solid #F69E0022' }}>
+                                <div className="text-3xl font-bold" style={{ color: GOLD }}>{stats.tassoChiusura}%</div>
+                                <div className="text-xs text-neutral-500 mt-1 font-medium">Tasso Chiusura</div>
+                                <div className="text-[10px] text-neutral-600 mt-0.5">{stats.confermati} / {stats.total} totale</div>
+                            </div>
+                            <div className="rounded-xl p-5" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+                                <div className="text-3xl font-bold" style={{ color: stats.taskCompletati > 0 ? '#22C55E' : '#555' }}>
+                                    {stats.taskTotali > 0 ? Math.round((stats.taskCompletati / stats.taskTotali) * 100) : 0}%
+                                </div>
+                                <div className="text-xs text-neutral-500 mt-1 font-medium">Task Completati</div>
+                                <div className="text-[10px] text-neutral-600 mt-0.5">{stats.taskCompletati} / {stats.taskTotali} task</div>
+                            </div>
+                        </div>
+
+                        {/* Pipeline Progress Bar */}
                         <div className="rounded-xl p-5" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
                             <p className="text-xs font-bold tracking-widest text-neutral-500 mb-3">PIPELINE AVANZAMENTO</p>
                             <div className="h-2 rounded-full overflow-hidden flex" style={{ background: '#222' }}>
@@ -303,7 +331,8 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-3 gap-4">
+                            {/* Distribuzione Liste */}
                             <div className="rounded-xl p-5" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
                                 <p className="text-xs font-bold tracking-widest text-neutral-500 mb-4">DISTRIBUZIONE LISTE</p>
                                 {[
@@ -318,6 +347,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                                 ))}
                             </div>
 
+                            {/* Task di Oggi */}
                             <div className="rounded-xl p-5" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
                                 <p className="text-xs font-bold tracking-widest text-neutral-500 mb-4">TASK DI OGGI ({todayTasks.length})</p>
                                 {todayTasks.length === 0 && <p className="text-sm text-neutral-600">Nessun task per oggi 🎉</p>}
@@ -331,8 +361,25 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                                     </div>
                                 ))}
                             </div>
+
+                            {/* Attività Settimana */}
+                            <div className="rounded-xl p-5" style={{ background: '#001020', border: '1px solid #3B9EFF22' }}>
+                                <p className="text-xs font-bold tracking-widest mb-4" style={{ color: '#3B9EFF' }}>📊 ATTIVITÀ SETTIMANA</p>
+                                <div className="text-2xl font-bold mb-1" style={{ color: '#3B9EFF' }}>{stats.aggiornamentiSettimana}</div>
+                                <div className="text-xs text-neutral-500 mb-3">contatti aggiornati ultimi 7 giorni</div>
+                                {stats.ultimiLavorati && stats.ultimiLavorati.slice(0, 4).map((c: any) => (
+                                    <div key={c.id} className="flex items-center justify-between mb-1.5">
+                                        <span className="text-xs text-neutral-400 truncate mr-2">{c.company_name}</span>
+                                        <span className="text-[10px] px-1.5 py-0.5 rounded" style={{
+                                            background: STATUS_CFG[c.status as ContactStatus]?.bg || '#222',
+                                            color: STATUS_CFG[c.status as ContactStatus]?.color || '#666',
+                                        }}>{c.status}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
+                        {/* Alta priorità */}
                         <div className="rounded-xl p-5" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
                             <p className="text-xs font-bold tracking-widest text-neutral-500 mb-4">🔴 ALTA PRIORITÀ — DA CONTATTARE ({contacts.filter(c => c.priority === 'Alta' && c.status === 'Da Contattare').length})</p>
                             <div className="grid grid-cols-3 gap-2">
@@ -444,6 +491,36 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                                 style={{ background: GOLD, border: 'none', color: '#000' }}>
                                 + Nuovo Task
                             </button>
+                        </div>
+
+                        {/* Performance Summary */}
+                        <div className="grid grid-cols-4 gap-3">
+                            <div className="rounded-xl p-4" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+                                <div className="text-2xl font-bold" style={{ color: GOLD }}>{stats.lavorati}</div>
+                                <div className="text-[10px] text-neutral-500 font-medium">Contatti Lavorati</div>
+                                <div className="mt-2 h-1 rounded-full overflow-hidden" style={{ background: '#222' }}>
+                                    <div className="h-full rounded-full" style={{ width: `${stats.total ? (stats.lavorati / stats.total) * 100 : 0}%`, background: GOLD }} />
+                                </div>
+                            </div>
+                            <div className="rounded-xl p-4" style={{ background: '#0A1A0A', border: '1px solid #22C55E22' }}>
+                                <div className="text-2xl font-bold" style={{ color: '#22C55E' }}>{stats.tassoConversione}%</div>
+                                <div className="text-[10px] text-neutral-500 font-medium">Conversione</div>
+                                <div className="mt-2 h-1 rounded-full overflow-hidden" style={{ background: '#222' }}>
+                                    <div className="h-full rounded-full" style={{ width: `${stats.tassoConversione}%`, background: '#22C55E' }} />
+                                </div>
+                            </div>
+                            <div className="rounded-xl p-4" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+                                <div className="text-2xl font-bold" style={{ color: stats.taskScaduti > 0 ? '#EF4444' : '#22C55E' }}>
+                                    {stats.taskOggi + stats.taskScaduti}
+                                </div>
+                                <div className="text-[10px] text-neutral-500 font-medium">
+                                    Da fare {stats.taskScaduti > 0 && <span style={{ color: '#EF4444' }}>({stats.taskScaduti} scaduti)</span>}
+                                </div>
+                            </div>
+                            <div className="rounded-xl p-4" style={{ background: '#001020', border: '1px solid #3B9EFF22' }}>
+                                <div className="text-2xl font-bold" style={{ color: '#3B9EFF' }}>{stats.aggiornamentiSettimana}</div>
+                                <div className="text-[10px] text-neutral-500 font-medium">Aggiornati questa settimana</div>
+                            </div>
                         </div>
 
                         {overdueTasks.length > 0 && (
