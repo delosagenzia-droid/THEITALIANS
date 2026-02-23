@@ -863,23 +863,30 @@ function ContactModal({ contact, tasks, onClose, onSave, onStatusChange, onToggl
                 </div>
             )}
 
-            <div className="mt-5">
-                <p className="text-xs font-bold tracking-widest text-neutral-500 mb-3">TASK ({tasks.length})</p>
-                {tasks.map(t => (
-                    <div key={t.id} className="flex items-center gap-2 rounded-lg p-2.5 mb-1.5" style={{ background: '#111', opacity: t.completed ? 0.4 : 1 }}>
-                        <input type="checkbox" checked={t.completed} onChange={e => onToggleTask(t.id, e.target.checked)}
-                            className="cursor-pointer" style={{ accentColor: GOLD }} />
-                        <span className="text-sm flex-1" style={{ textDecoration: t.completed ? 'line-through' : 'none', color: t.completed ? '#444' : '#ccc' }}>
-                            {t.type} — {t.note || '—'} · {t.due_date}
-                        </span>
-                        <button onClick={() => onDeleteTask(t.id)} style={{ background: 'none', border: 'none', color: '#333', cursor: 'pointer', fontSize: 16 }}>×</button>
-                    </div>
-                ))}
-                <button onClick={() => onAddTask(contact.id)}
-                    className="w-full rounded-lg py-2 text-sm text-neutral-600 cursor-pointer mt-1"
-                    style={{ background: 'none', border: '1px dashed #2A2A2A' }}>
-                    + Task per {contact.company_name}
-                </button>
+            <div className="grid grid-cols-2 gap-6 mt-5 items-start">
+                <div>
+                    <p className="text-xs font-bold tracking-widest text-neutral-500 mb-3">TASK ({tasks.length})</p>
+                    {tasks.map(t => (
+                        <div key={t.id} className="flex items-center gap-2 rounded-lg p-2.5 mb-1.5" style={{ background: '#111', opacity: t.completed ? 0.4 : 1 }}>
+                            <input type="checkbox" checked={t.completed} onChange={e => onToggleTask(t.id, e.target.checked)}
+                                className="cursor-pointer" style={{ accentColor: GOLD }} />
+                            <span className="text-sm flex-1 truncate" style={{ textDecoration: t.completed ? 'line-through' : 'none', color: t.completed ? '#444' : '#ccc' }} title={t.note || ''}>
+                                {t.type} {t.note ? `— ${t.note}` : ''} <span className="text-neutral-600">· {t.due_date}</span>
+                            </span>
+                            <button onClick={() => onDeleteTask(t.id)} style={{ background: 'none', border: 'none', color: '#333', cursor: 'pointer', fontSize: 16 }}>×</button>
+                        </div>
+                    ))}
+                    <button onClick={() => onAddTask(contact.id)}
+                        className="w-full rounded-lg py-2 text-sm text-neutral-600 cursor-pointer mt-1"
+                        style={{ background: 'none', border: '1px dashed #2A2A2A' }}>
+                        + Task per {contact.company_name}
+                    </button>
+                </div>
+
+                <div className="rounded-xl p-5" style={{ background: '#141414', border: '1px solid #1E1E1E' }}>
+                    <p className="text-xs font-bold tracking-widest text-neutral-500 mb-2">TIMELINE STATUS</p>
+                    <ContactTimeline history={contact.status_history} currentStatus={form.status} />
+                </div>
             </div>
 
             <div className="flex gap-2 mt-5 flex-wrap">
@@ -907,6 +914,47 @@ function ContactModal({ contact, tasks, onClose, onSave, onStatusChange, onToggl
                 )}
             </div>
         </Modal>
+    )
+}
+
+function ContactTimeline({ history, currentStatus }: { history?: { status: string; timestamp: string }[] | null, currentStatus: string }) {
+    if (!history || history.length === 0) {
+        return <p className="text-xs text-neutral-600 mt-2">Nessuna cronologia disponibile per questa azienda.</p>
+    }
+
+    const sorted = [...history].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+
+    return (
+        <div className="mt-3 relative">
+            <div className="absolute top-2 bottom-2 left-[11px] w-[2px]" style={{ background: '#222' }} />
+            <div className="space-y-4">
+                {sorted.map((item, i) => {
+                    const date = new Date(item.timestamp)
+                    const isLast = i === sorted.length - 1
+                    const nextDate = isLast ? new Date() : new Date(sorted[i + 1].timestamp)
+                    const diffDays = Math.max(0, Math.floor((nextDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)))
+
+                    const cfg = STATUS_CFG[item.status as ContactStatus] || { dot: '#888', color: '#888' }
+
+                    return (
+                        <div key={i} className="relative pl-8">
+                            <div className="absolute left-0 top-1.5 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: '#141414', zIndex: 10 }}>
+                                <div className="w-2.5 h-2.5 rounded-full" style={{ background: cfg.dot, boxShadow: `0 0 8px ${cfg.dot}66` }} />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm font-bold" style={{ color: cfg.color }}>{item.status}</span>
+                                <span className="text-xs text-neutral-500">{date.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</span>
+                            </div>
+                            <div className="text-[11px] text-neutral-600 font-medium mt-0.5">
+                                {isLast ? (
+                                    currentStatus !== 'Declinato' && currentStatus !== 'Confermato' ? `In questo stato da ${diffDays} giorni` : 'Stato finale raggiunto'
+                                ) : `Cambiato dopo ${diffDays} giorni`}
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
     )
 }
 

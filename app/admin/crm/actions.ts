@@ -12,6 +12,7 @@ export type TaskType = 'Email' | 'LinkedIn' | 'Telefono' | 'WhatsApp'
 export interface OutreachContact {
     id: string
     company_name: string
+    status_history?: { status: string; timestamp: string }[] | null
     sector: string | null
     category: string | null
     city: string | null
@@ -65,7 +66,12 @@ export async function getContacts(filters?: {
 
 export async function updateContactStatus(id: string, status: ContactStatus) {
     const supabase = await createClient()
-    const { error } = await supabase.from('outreach_contacts').update({ status }).eq('id', id)
+
+    const { data: contact } = await supabase.from('outreach_contacts').select('status_history').eq('id', id).single()
+    const history = contact?.status_history || []
+    history.push({ status, timestamp: new Date().toISOString() })
+
+    const { error } = await supabase.from('outreach_contacts').update({ status, status_history: history }).eq('id', id)
     if (error) throw new Error(error.message)
     revalidatePath('/admin/crm')
 }
@@ -79,7 +85,12 @@ export async function updateContact(id: string, data: Partial<OutreachContact>) 
 
 export async function createContact(data: Omit<OutreachContact, 'id' | 'created_at' | 'updated_at'>) {
     const supabase = await createClient()
-    const { error } = await supabase.from('outreach_contacts').insert(data)
+
+    // Inizializza la history con il primo stato
+    const initialHistory = [{ status: data.status, timestamp: new Date().toISOString() }]
+    const contactData = { ...data, status_history: initialHistory }
+
+    const { error } = await supabase.from('outreach_contacts').insert(contactData)
     if (error) throw new Error(error.message)
     revalidatePath('/admin/crm')
 }
