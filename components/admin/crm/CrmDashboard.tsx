@@ -19,6 +19,7 @@ const GOLD = '#F69E00'
 const STATUS_CFG: Record<ContactStatus, { color: string; bg: string; dot: string }> = {
     'Da Contattare': { color: '#666', bg: '#1A1A1A', dot: '#555' },
     'Contattato': { color: '#F69E00', bg: '#2A2000', dot: '#F69E00' },
+    'Follow Up': { color: '#A855F7', bg: '#2B1A3A', dot: '#A855F7' },
     'In Trattativa': { color: '#3B9EFF', bg: '#001830', dot: '#3B9EFF' },
     'Confermato': { color: '#22C55E', bg: '#001A0D', dot: '#22C55E' },
     'Declinato': { color: '#EF4444', bg: '#1A0000', dot: '#EF4444' },
@@ -109,7 +110,7 @@ interface Props {
 }
 
 export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Props) {
-    const [tab, setTab] = useState<'overview' | 'database' | 'daily' | 'pipeline'>('overview')
+    const [tab, setTab] = useState<'overview' | 'database' | 'daily' | 'pipeline' | 'followup'>('overview')
     const [contacts, setContacts] = useState(initialContacts)
     const [tasks, setTasks] = useState(initialTasks)
     const [stats, setStats] = useState(initialStats)
@@ -220,6 +221,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
         { id: 'database', label: `Database (${filtered.length})` },
         { id: 'daily', label: `Gestione Giornaliera${todayTasks.length ? ` (${todayTasks.length})` : ''}` },
         { id: 'pipeline', label: 'Pipeline' },
+        { id: 'followup', label: `Follow Up (${contacts.filter(c => c.status === 'Follow Up').length})` },
     ] as const
 
     return (
@@ -276,10 +278,11 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                 {tab === 'overview' && (
                     <div className="space-y-6">
                         {/* KPI Status Row */}
-                        <div className="grid grid-cols-6 gap-3">
+                        <div className="grid grid-cols-7 gap-3">
                             <Stat val={stats.total} label="Totale" />
-                            <Stat val={stats.daContattare} label="Da Contattare" color="#666" />
+                            <Stat val={stats.daContattare} label="Da Cont." color="#666" />
                             <Stat val={stats.contattati} label="Contattati" color={GOLD} />
+                            <Stat val={(stats as any).followUp} label="Follow Up" color="#A855F7" />
                             <Stat val={stats.inTrattativa} label="In Trattativa" color="#3B9EFF" />
                             <Stat val={stats.confermati} label="Confermati" color="#22C55E" />
                             <Stat val={stats.declinati} label="Declinati" color="#EF4444" />
@@ -568,7 +571,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                 {tab === 'pipeline' && (
                     <div>
                         <h2 className="text-xl font-bold mb-5">Pipeline Outreach</h2>
-                        <div className="grid grid-cols-5 gap-3 items-start">
+                        <div className="grid grid-cols-6 gap-3 items-start">
                             {(Object.entries(STATUS_CFG) as [ContactStatus, typeof STATUS_CFG[ContactStatus]][]).map(([status, cfg]) => {
                                 const items = contacts.filter(c => c.status === status)
                                 return (
@@ -590,6 +593,54 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                                     </div>
                                 )
                             })}
+                        </div>
+                    </div>
+                )}
+
+                {/* ── FOLLOW UP ─────────────────────────────────────────────────── */}
+                {tab === 'followup' && (
+                    <div>
+                        <div className="flex items-center justify-between mb-5">
+                            <h2 className="text-xl font-bold">Follow Up Aziende</h2>
+                            <span className="text-sm text-neutral-500">{contacts.filter(c => c.status === 'Follow Up').length} aziende in follow up</span>
+                        </div>
+                        <div className="rounded-xl overflow-hidden" style={{ background: '#1A1A1A', border: '1px solid #2A2A2A' }}>
+                            <table className="w-full border-collapse">
+                                <thead>
+                                    <tr style={{ borderBottom: '1px solid #2A2A2A' }}>
+                                        {['Azienda', 'Ultimo Contatto', 'Prossimo Passo', 'Referente', 'Priorità', 'Azioni'].map(h => (
+                                            <th key={h} className="px-3 py-3 text-left text-xs font-bold tracking-widest"
+                                                style={{ color: '#444' }}>{h.toUpperCase()}</th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {contacts.filter(c => c.status === 'Follow Up').map(c => (
+                                        <tr key={c.id} onClick={() => setSelectedContact(c)}
+                                            className="cursor-pointer transition-colors hover:bg-neutral-900"
+                                            style={{ borderBottom: '1px solid #1E1E1E' }}>
+                                            <td className="px-3 py-3">
+                                                <div className="text-sm font-semibold">{c.company_name}</div>
+                                                <div className="text-xs text-neutral-500 mt-0.5">{c.city || '—'}</div>
+                                            </td>
+                                            <td className="px-3 py-3 text-sm text-neutral-400">{c.last_contact || '—'}</td>
+                                            <td className="px-3 py-3 text-sm text-neutral-300 max-w-[200px] truncate">{c.next_step || '—'}</td>
+                                            <td className="px-3 py-3 text-sm text-neutral-400">{c.contact_name || '—'}</td>
+                                            <td className="px-3 py-3"><PriorityDots p={c.priority} /></td>
+                                            <td className="px-3 py-3 text-right">
+                                                <button className="text-xs font-bold px-3 py-1.5 rounded transition-colors hover:bg-white/10" style={{ background: '#222', color: '#fff' }}>
+                                                    Aggiorna
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {contacts.filter(c => c.status === 'Follow Up').length === 0 && (
+                                        <tr>
+                                            <td colSpan={6} className="px-3 py-10 text-center text-sm text-neutral-600">Nessuna azienda in follow up.</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 )}
@@ -772,7 +823,7 @@ function ContactModal({ contact, tasks, onClose, onSave, onStatusChange, onToggl
                     <select className={inputCls + ' cursor-pointer'} style={inputStyle}
                         value={form.status}
                         onChange={e => { set('status')(e.target.value); onStatusChange(contact.id, e.target.value as ContactStatus) }}>
-                        {['Da Contattare', 'Contattato', 'In Trattativa', 'Confermato', 'Declinato'].map(s => <option key={s}>{s}</option>)}
+                        {['Da Contattare', 'Contattato', 'Follow Up', 'In Trattativa', 'Confermato', 'Declinato'].map(s => <option key={s}>{s}</option>)}
                     </select>
                 </div>
                 <div>
@@ -861,7 +912,7 @@ function ContactModal({ contact, tasks, onClose, onSave, onStatusChange, onToggl
 
 function statusKey(s: ContactStatus) {
     const map: Record<ContactStatus, string> = {
-        'Da Contattare': 'daContattare', 'Contattato': 'contattati',
+        'Da Contattare': 'daContattare', 'Contattato': 'contattati', 'Follow Up': 'followUp',
         'In Trattativa': 'inTrattativa', 'Confermato': 'confermati', 'Declinato': 'declinati',
     }
     return map[s]
