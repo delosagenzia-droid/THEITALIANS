@@ -190,7 +190,8 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
     const handleCreateContact = async () => {
         if (!newContact.company_name) return
         startTransition(async () => {
-            await createContact(newContact as Omit<OutreachContact, 'id' | 'created_at' | 'updated_at'>)
+            const created = await createContact(newContact as Omit<OutreachContact, 'id' | 'created_at' | 'updated_at'>)
+            if (created) setContacts(prev => [...prev, created])
         })
         setShowAddContact(false)
         setNewContact({ status: 'Da Contattare', priority: 'Media', lista: 'B2B' })
@@ -199,9 +200,14 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
     const handleCreateTask = async () => {
         if (!newTask.contact_id) return
         startTransition(async () => {
-            await createTask(newTask)
+            const created = await createTask(newTask)
+            if (created) setTasks(prev => [...prev, created])
         })
         setShowAddTask(false)
+        setNewTask({
+            contact_id: '', type: 'Email',
+            due_date: new Date().toISOString().split('T')[0], note: '',
+        })
     }
 
     const handleToggleTask = (id: string, completed: boolean) => {
@@ -656,7 +662,7 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                     onStatusChange={handleStatusChange}
                     onToggleTask={handleToggleTask}
                     onDeleteTask={handleDeleteTask}
-                    onAddTask={(cid) => { setNewTask(p => ({ ...p, contact_id: cid })); setShowAddTask(true); setSelectedContact(null) }}
+                    onAddTask={(cid) => { setNewTask(p => ({ ...p, contact_id: cid })); setShowAddTask(true) }}
                 />
             )}
 

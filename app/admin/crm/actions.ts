@@ -90,9 +90,10 @@ export async function createContact(data: Omit<OutreachContact, 'id' | 'created_
     const initialHistory = [{ status: data.status, timestamp: new Date().toISOString() }]
     const contactData = { ...data, status_history: initialHistory }
 
-    const { error } = await supabase.from('outreach_contacts').insert(contactData)
+    const { data: created, error } = await supabase.from('outreach_contacts').insert(contactData).select().single()
     if (error) throw new Error(error.message)
     revalidatePath('/admin/crm')
+    return created
 }
 
 // ─── TASKS ───────────────────────────────────────────────────────────────────
@@ -109,9 +110,10 @@ export async function getTasks() {
 
 export async function createTask(data: { contact_id: string; type: TaskType; due_date: string; note?: string }) {
     const supabase = await createClient()
-    const { error } = await supabase.from('outreach_tasks').insert({ ...data, completed: false })
+    const { data: created, error } = await supabase.from('outreach_tasks').insert({ ...data, completed: false }).select('*, outreach_contacts(company_name, status)').single()
     if (error) throw new Error(error.message)
     revalidatePath('/admin/crm')
+    return created
 }
 
 export async function toggleTask(id: string, completed: boolean) {
