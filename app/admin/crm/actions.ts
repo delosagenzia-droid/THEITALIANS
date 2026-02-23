@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase-server'
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
 
-export type ContactStatus = 'Da Contattare' | 'Contattato' | 'Follow Up' | 'In Trattativa' | 'Confermato' | 'Declinato'
+export type ContactStatus = 'Da Contattare' | 'Contattato' | 'In Dialogo' | 'Follow Up' | 'In Trattativa' | 'Confermato' | 'Declinato'
 export type ContactPriority = 'Alta' | 'Media' | 'Bassa'
 export type TaskType = 'Email' | 'LinkedIn' | 'Telefono' | 'WhatsApp'
 
@@ -162,6 +162,7 @@ export async function getCrmStats() {
         total: cs.length,
         daContattare: cs.filter(c => c.status === 'Da Contattare').length,
         contattati: cs.filter(c => c.status === 'Contattato').length,
+        inDialogo: cs.filter(c => c.status === 'In Dialogo').length,
         followUp: cs.filter(c => c.status === 'Follow Up').length,
         inTrattativa: cs.filter(c => c.status === 'In Trattativa').length,
         confermati,

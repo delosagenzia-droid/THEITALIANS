@@ -19,6 +19,7 @@ const GOLD = '#F69E00'
 const STATUS_CFG: Record<ContactStatus, { color: string; bg: string; dot: string }> = {
     'Da Contattare': { color: '#666', bg: '#1A1A1A', dot: '#555' },
     'Contattato': { color: '#F69E00', bg: '#2A2000', dot: '#F69E00' },
+    'In Dialogo': { color: '#06B6D4', bg: '#001A1A', dot: '#06B6D4' },
     'Follow Up': { color: '#A855F7', bg: '#2B1A3A', dot: '#A855F7' },
     'In Trattativa': { color: '#3B9EFF', bg: '#001830', dot: '#3B9EFF' },
     'Confermato': { color: '#22C55E', bg: '#001A0D', dot: '#22C55E' },
@@ -284,10 +285,11 @@ export function CrmDashboard({ initialStats, initialContacts, initialTasks }: Pr
                 {tab === 'overview' && (
                     <div className="space-y-6">
                         {/* KPI Status Row */}
-                        <div className="grid grid-cols-7 gap-3">
+                        <div className="grid grid-cols-8 gap-3">
                             <Stat val={stats.total} label="Totale" />
                             <Stat val={stats.daContattare} label="Da Cont." color="#666" />
                             <Stat val={stats.contattati} label="Contattati" color={GOLD} />
+                            <Stat val={(stats as any).inDialogo} label="In Dialogo" color="#06B6D4" />
                             <Stat val={(stats as any).followUp} label="Follow Up" color="#A855F7" />
                             <Stat val={stats.inTrattativa} label="In Trattativa" color="#3B9EFF" />
                             <Stat val={stats.confermati} label="Confermati" color="#22C55E" />
@@ -829,7 +831,7 @@ function ContactModal({ contact, tasks, onClose, onSave, onStatusChange, onToggl
                     <select className={inputCls + ' cursor-pointer'} style={inputStyle}
                         value={form.status}
                         onChange={e => { set('status')(e.target.value); onStatusChange(contact.id, e.target.value as ContactStatus) }}>
-                        {['Da Contattare', 'Contattato', 'Follow Up', 'In Trattativa', 'Confermato', 'Declinato'].map(s => <option key={s}>{s}</option>)}
+                        {Object.keys(STATUS_CFG).map(s => <option key={s}>{s}</option>)}
                     </select>
                 </div>
                 <div>
@@ -966,8 +968,8 @@ function ContactTimeline({ history, currentStatus }: { history?: { status: strin
 
 function statusKey(s: ContactStatus) {
     const map: Record<ContactStatus, string> = {
-        'Da Contattare': 'daContattare', 'Contattato': 'contattati', 'Follow Up': 'followUp',
+        'Da Contattare': 'daContattare', 'Contattato': 'contattati', 'In Dialogo': 'inDialogo', 'Follow Up': 'followUp',
         'In Trattativa': 'inTrattativa', 'Confermato': 'confermati', 'Declinato': 'declinati',
     }
-    return map[s]
+    return map[s] || s
 }
