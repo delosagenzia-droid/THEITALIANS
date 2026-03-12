@@ -58,10 +58,16 @@ export async function middleware(request: NextRequest) {
     // 2. Check auth
     const { data: { user } } = await supabase.auth.getUser()
 
-    // 3. Protect admin routes
-    if (request.nextUrl.pathname.startsWith('/admin/dashboard') || request.nextUrl.pathname.startsWith('/admin/crm')) {
+    if (
+        request.nextUrl.pathname.startsWith('/admin/dashboard') || 
+        request.nextUrl.pathname.startsWith('/admin/crm') ||
+        request.nextUrl.pathname.startsWith('/admin/riccardo') ||
+        request.nextUrl.pathname.startsWith('/admin/collaborations')
+    ) {
         if (!user) {
-            return NextResponse.redirect(new URL('/admin/login', request.url))
+            const redirectUrl = new URL('/admin/login', request.url)
+            redirectUrl.searchParams.set('next', request.nextUrl.pathname)
+            return NextResponse.redirect(redirectUrl)
         }
 
         // Security: Only allow specific Admin UID

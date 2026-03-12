@@ -54,6 +54,12 @@ export default async function AdminDashboard({
                         <Link href="/admin/crm">
                             <Button size="sm" variant="outline">CRM Outreach</Button>
                         </Link>
+                        <Link href="/admin/riccardo">
+                            <Button size="sm" variant="primary" className="bg-[#8B6E4E] text-white hover:bg-[#A38B70] border-none">Area Riccardo</Button>
+                        </Link>
+                        <Link href="/admin/collaborations">
+                            <Button size="sm" variant="outline" className="text-[#8B6E4E] border-[#8B6E4E] hover:bg-[#8B6E4E]/10">Deal Board</Button>
+                        </Link>
                         <form action="/auth/signout" method="post">
                             <Button size="sm" variant="outline">Logout</Button>
                         </form>

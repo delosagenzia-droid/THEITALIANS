@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase-browser';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
 export default function AdminLogin() {
@@ -12,6 +12,7 @@ export default function AdminLogin() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     async function handleLogin(e: React.FormEvent) {
         e.preventDefault();
@@ -25,7 +26,9 @@ export default function AdminLogin() {
             });
 
             if (error) throw error;
-            router.push('/admin/dashboard');
+            
+            const nextUrl = searchParams.get('next');
+            router.push(nextUrl || '/admin/dashboard');
         } catch (err: any) {
             setError(err.message || 'Errore durante il login');
         } finally {
