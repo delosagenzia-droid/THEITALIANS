@@ -69,13 +69,6 @@ export async function middleware(request: NextRequest) {
             redirectUrl.searchParams.set('next', request.nextUrl.pathname)
             return NextResponse.redirect(redirectUrl)
         }
-
-        // Security: Only allow specific Admin UID
-        const ADMIN_UID = '13e1a9ca-6460-4e45-a027-780d66622163';
-        if (user.id !== ADMIN_UID) {
-            // Redirect unauthorized users to home or show error
-            return NextResponse.redirect(new URL('/', request.url));
-        }
     }
 
     // 4. Redirect logged-in users away from login

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { createClient } from '@/lib/supabase-browser';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 
-export default function AdminLogin() {
+function AdminLoginContent() {
     const supabase = createClient();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -72,5 +72,13 @@ export default function AdminLogin() {
                 </form>
             </div>
         </div>
+    );
+}
+
+export default function AdminLogin() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-bg text-white">Caricamento...</div>}>
+            <AdminLoginContent />
+        </Suspense>
     );
 }
