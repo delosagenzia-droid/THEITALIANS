@@ -10,3 +10,13 @@ export async function POST(request: Request) {
     // Redirect to the login page after successful signout
     return NextResponse.redirect(new URL('/admin/login', request.url));
 }
+
+export async function GET(request: Request) {
+    const supabase = await createClient();
+
+    // Sign out from Supabase (clears cookies)
+    await supabase.auth.signOut();
+
+    // Redirect to the login page after successful signout
+    return NextResponse.redirect(new URL('/admin/login', request.url));
+}
