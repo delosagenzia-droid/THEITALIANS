@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase-browser";
-import { Loader2, Mail, Phone, Calendar, Trash2 } from "lucide-react";
+import { Loader2, Mail, Phone, Calendar, Trash2, Pencil } from "lucide-react";
 
 type ContactType = "video" | "proposal" | "delos";
 
@@ -21,9 +21,10 @@ interface Contact {
 interface ContactsTableProps {
   type: ContactType;
   refreshTrigger?: number;
+  onEdit: (contact: Contact) => void;
 }
 
-export function ContactsTable({ type, refreshTrigger = 0 }: ContactsTableProps) {
+export function ContactsTable({ type, refreshTrigger = 0, onEdit }: ContactsTableProps) {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -209,13 +210,22 @@ export function ContactsTable({ type, refreshTrigger = 0 }: ContactsTableProps) 
               </td>
 
               <td className="px-4 py-4 align-top text-right">
-                <button
-                  onClick={() => deleteContact(contact.id)}
-                  className="p-2 text-neutral-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                  title="Elimina contatto"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <div className="flex items-center justify-end gap-2">
+                  <button
+                    onClick={() => onEdit(contact)}
+                    className="p-2 text-neutral-500 hover:text-blue-400 hover:bg-blue-500/10 rounded-lg transition-colors"
+                    title="Modifica contatto"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => deleteContact(contact.id)}
+                    className="p-2 text-neutral-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                    title="Elimina contatto"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

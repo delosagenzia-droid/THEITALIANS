@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ContactsTable } from "@/components/riccardo/ContactsTable";
 import { AddContactModal } from "@/components/riccardo/AddContactModal";
+import { EditContactModal } from "@/components/riccardo/EditContactModal";
 import { Video, Briefcase, Rocket, Plus, LogOut, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -11,6 +12,7 @@ type Tab = "video" | "proposal" | "delos";
 export default function RiccardoAdminPage() {
   const [activeTab, setActiveTab] = useState<Tab>("video");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingContact, setEditingContact] = useState<any>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const handleContactAdded = () => {
@@ -120,7 +122,11 @@ export default function RiccardoAdminPage() {
 
           {/* TABLE COMPONENT ENCAPSULATED */}
           <div className="p-4 lg:p-8">
-            <ContactsTable type={activeTab} refreshTrigger={refreshTrigger} />
+            <ContactsTable 
+              type={activeTab} 
+              refreshTrigger={refreshTrigger} 
+              onEdit={(contact) => setEditingContact(contact)}
+            />
           </div>
           
         </div>
@@ -131,6 +137,13 @@ export default function RiccardoAdminPage() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         type={activeTab}
+        onSuccess={handleContactAdded}
+      />
+
+      <EditContactModal 
+        isOpen={!!editingContact}
+        onClose={() => setEditingContact(null)}
+        contact={editingContact}
         onSuccess={handleContactAdded}
       />
     </div>
